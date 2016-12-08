@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+def cfg = rootProject.ext;
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        applicationId cfg.applicationId
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        buildConfigField "String", "BASIC_TOKEN", "\"${cfg.basic_token}\""
+        buildConfigField "String", "APP_ID", "\"${cfg.app_id}\""
+        buildConfigField "String", "VERSION", "\"${cfg.versionName}\""
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile cfg.dependencies["support-design"]
+    compile cfg.dependencies["appcompat-v7"]
+    compile cfg.dependencies["recyclerView"]
+    compile cfg.dependencies["glide"]
+    compile cfg.dependencies["rxandroid"]
+    compile cfg.dependencies["rx-preferences"]
+    compile cfg.dependencies["eventbus"]
+    apt cfg.dependencies["dagger-compiler"]
+    compile project(':presenter')
+}

@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+def cfg = rootProject.ext;
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // ReactiveX
+    compile cfg.dependencies["rxjava"]
+
+    // Square
+    compile cfg.dependencies["retrofit"]
+    compile cfg.dependencies["converter-gson"]
+    compile cfg.dependencies["adapter-rxjava"]
+
+    compile cfg.dependencies["dagger"]
+    compile cfg.dependencies["logging-interceptor"]
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
