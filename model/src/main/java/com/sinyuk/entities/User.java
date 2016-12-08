@@ -1,21 +1,39 @@
-package com.sinyuk.model;
+package com.sinyuk.entities;
+
+import com.google.gson.annotations.SerializedName;
 
 public final class User {
 
+
+    @SerializedName("id")
     private int id;
+    @SerializedName("username")
     private String username;
+    @SerializedName("firstname")
     private String firstname;
+    @SerializedName("lastname")
     private String lastname;
+    @SerializedName("city")
     private String city;
+    @SerializedName("country")
     private String country;
+    @SerializedName("usertype")
     private int usertype;
+    @SerializedName("fullname")
     private String fullname;
-    private String userpic_url;
-    private String userpic_https_url;
-    private String cover_url;
-    private int upgrade_status;
-    private boolean store_on;
+    @SerializedName("userpic_url")
+    private String userpicUrl;
+    @SerializedName("userpic_https_url")
+    private String userpicHttpsUrl;
+    @SerializedName("cover_url")
+    private String coverUrl;
+    @SerializedName("upgrade_status")
+    private int upgradeStatus;
+    @SerializedName("store_on")
+    private boolean storeOn;
+    @SerializedName("affection")
     private int affection;
+    @SerializedName("avatars")
     private Avatars avatars;
 
     public int getId() {
@@ -82,44 +100,44 @@ public final class User {
         this.fullname = fullname;
     }
 
-    public String getUserpic_url() {
-        return userpic_url;
+    public String getUserpicUrl() {
+        return userpicUrl;
     }
 
-    public void setUserpic_url(String userpic_url) {
-        this.userpic_url = userpic_url;
+    public void setUserpicUrl(String userpicUrl) {
+        this.userpicUrl = userpicUrl;
     }
 
-    public String getUserpic_https_url() {
-        return userpic_https_url;
+    public String getUserpicHttpsUrl() {
+        return userpicHttpsUrl;
     }
 
-    public void setUserpic_https_url(String userpic_https_url) {
-        this.userpic_https_url = userpic_https_url;
+    public void setUserpicHttpsUrl(String userpicHttpsUrl) {
+        this.userpicHttpsUrl = userpicHttpsUrl;
     }
 
-    public String getCover_url() {
-        return cover_url;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
-    public int getUpgrade_status() {
-        return upgrade_status;
+    public int getUpgradeStatus() {
+        return upgradeStatus;
     }
 
-    public void setUpgrade_status(int upgrade_status) {
-        this.upgrade_status = upgrade_status;
+    public void setUpgradeStatus(int upgradeStatus) {
+        this.upgradeStatus = upgradeStatus;
     }
 
-    public boolean isStore_on() {
-        return store_on;
+    public boolean isStoreOn() {
+        return storeOn;
     }
 
-    public void setStore_on(boolean store_on) {
-        this.store_on = store_on;
+    public void setStoreOn(boolean storeOn) {
+        this.storeOn = storeOn;
     }
 
     public int getAffection() {
@@ -137,6 +155,4 @@ public final class User {
     public void setAvatars(Avatars avatars) {
         this.avatars = avatars;
     }
-
-
 }

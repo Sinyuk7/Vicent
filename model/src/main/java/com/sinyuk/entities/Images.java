@@ -1,4 +1,4 @@
-package com.sinyuk.model;
+package com.sinyuk.entities;
 
 public final class Images {
     /**

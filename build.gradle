@@ -28,9 +28,9 @@ ext {
 
     ext {
 
-        basic_token="circle.token"
+        consumer_key="Xx7POjPfqTL6HKJyBV3gbe3t81om8aGv24ymAeU0"
 
-        app_id = "wxabf835ea4a1b68f6"
+        consumer_secret = "wsm3bKBld3u4XW8b6JgWTiouY3dyHyjYRXNTIgKv"
 
         compileSdkVersion = 25
         buildToolsVersion = "25.0.0"

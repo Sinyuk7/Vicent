@@ -13,8 +13,8 @@ android {
         targetSdkVersion cfg.targetSdkVersion
         versionCode cfg.versionCode
         versionName cfg.versionName
-        buildConfigField "String", "BASIC_TOKEN", "\"${cfg.basic_token}\""
-        buildConfigField "String", "APP_ID", "\"${cfg.app_id}\""
+        buildConfigField "String", "CONSUMER_KEY", "\"${cfg.consumer_key}\""
+        buildConfigField "String", "CONSUMER_SECRET", "\"${cfg.consumer_secret}\""
         buildConfigField "String", "VERSION", "\"${cfg.versionName}\""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
