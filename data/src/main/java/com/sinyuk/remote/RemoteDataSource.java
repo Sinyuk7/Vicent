@@ -25,17 +25,20 @@ import se.akerfeldt.okhttp.signpost.SigningInterceptor;
  */
 
 public final class RemoteDataSource implements RemoteRepository {
-    private final static String END_POINT = "https://api.500px.com/v1/";
+
     private static final long MAX_CACHE = 1024 * 1024 * 100;
 
     private PxService pxService;
 
     @Inject
-    public RemoteDataSource(SigningInterceptor signingInterceptor, File path) {
-        Cache cache = new Cache(path, MAX_CACHE);
+    public RemoteDataSource(Endpoint endpoint, SigningInterceptor signingInterceptor, File path) {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
+        if (path != null) {
+            final Cache cache = new Cache(path, MAX_CACHE);
+            builder.cache(cache);
+        }
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -58,7 +61,7 @@ public final class RemoteDataSource implements RemoteRepository {
 
 
         final Retrofit adapter = new Retrofit.Builder()
-                .baseUrl(END_POINT)
+                .baseUrl(endpoint.getEndpoint())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(builder.build())
