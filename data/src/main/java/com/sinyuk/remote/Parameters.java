@@ -1,4 +1,4 @@
-package com.sinyuk.api;
+package com.sinyuk.remote;
 
 /**
  * Created by sinyuk on 2016/12/8.

@@ -15,6 +15,10 @@ dependencies {
 
     compile cfg.dependencies["dagger"]
     compile cfg.dependencies["logging-interceptor"]
+
+    // A Signpost extension for signing OkHttp requests.
+    compile 'se.akerfeldt:okhttp-signpost:1.1.0'
+    compile 'oauth.signpost:signpost-core:1.2.1.2'
 }
 
 sourceCompatibility = "1.8"
