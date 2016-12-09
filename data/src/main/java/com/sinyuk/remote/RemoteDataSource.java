@@ -2,6 +2,9 @@ package com.sinyuk.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sinyuk.entities.Feature;
+import com.sinyuk.utils.ErrorCheckerTransformer;
+import com.sinyuk.utils.ResponseFunc;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -14,13 +17,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import se.akerfeldt.okhttp.signpost.SigningInterceptor;
 
 /**
  * Created by sinyuk on 2016/12/9.
  */
 
-public final class RemoteDataSource {
+public final class RemoteDataSource implements RemoteRepository {
     private final static String END_POINT = "https://api.500px.com/v1/";
     private static final long MAX_CACHE = 1024 * 1024 * 100;
 
@@ -61,5 +65,12 @@ public final class RemoteDataSource {
                 .build();
 
         pxService = adapter.create(PxService.class);
+    }
+
+    @Override
+    public Observable<Feature> photoByFeature(String feature) {
+        return pxService.getPhotos(feature)
+                .compose(new ErrorCheckerTransformer<>())
+                .flatMap(new ResponseFunc<>());
     }
 }
