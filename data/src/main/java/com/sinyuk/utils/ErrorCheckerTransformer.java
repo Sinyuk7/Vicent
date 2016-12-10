@@ -1,12 +1,10 @@
 package com.sinyuk.utils;
 
-import com.sinyuk.remote.BaseResponse;
-
 import retrofit2.Response;
 import rx.Observable;
 import rx.exceptions.Exceptions;
 
-public class ErrorCheckerTransformer<T extends Response<R>, R extends BaseResponse>
+public class ErrorCheckerTransformer<T extends Response<R>, R>
         implements Observable.Transformer<T, R> {
 
     private static final String DEFAULT_ERROR_MESSAGE = "Oh, no";
@@ -18,9 +16,8 @@ public class ErrorCheckerTransformer<T extends Response<R>, R extends BaseRespon
                     String msg = null;
                     if (!t.isSuccessful() || t.body() == null) {
                         msg = DEFAULT_ERROR_MESSAGE;
-                    } else if (t.body().getData() == null) {
-                        msg = t.body().getError();
-                        msg += "code: " + t.body().getStatus();
+                        if (t.message() != null)
+                            msg = t.message();
                     }
 
                     if (msg != null) {

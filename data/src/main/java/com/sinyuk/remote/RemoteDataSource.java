@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinyuk.entities.Feature;
 import com.sinyuk.utils.ErrorCheckerTransformer;
-import com.sinyuk.utils.ResponseFunc;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -73,7 +72,6 @@ public final class RemoteDataSource implements RemoteRepository {
     @Override
     public Observable<Feature> photoByFeature(String feature) {
         return pxService.getPhotos(feature)
-                .compose(new ErrorCheckerTransformer<>())
-                .flatMap(new ResponseFunc<>());
+                .compose(new ErrorCheckerTransformer<>());
     }
 }
