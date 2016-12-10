@@ -45,5 +45,5 @@ dependencies {
     compile cfg.dependencies["rx-preferences"]
     compile cfg.dependencies["eventbus"]
     apt cfg.dependencies["dagger-compiler"]
-    compile project(':presenter')
+    compile project(':usecase')
 }

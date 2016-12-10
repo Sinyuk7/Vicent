@@ -26,8 +26,6 @@ public class APITest {
         System.out.println("test");
 
         remoteDataSource.photoByFeature("popular")
-                .doOnSubscribe(() -> System.out.println("Subscribe"))
-                .doOnTerminate(() -> System.out.println("Terminate"))
                 .subscribe(new Observer<Feature>() {
                     @Override
                     public void onCompleted() {
@@ -37,7 +35,6 @@ public class APITest {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        System.out.println(e.getMessage());
                     }
 
                     @Override
