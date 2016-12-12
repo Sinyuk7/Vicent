@@ -6,7 +6,7 @@ package com.sinyuk.remote;
 
 public final class Parameters {
     /* feature (required) — Photo stream to be retrieved. Default fresh_today.*/
-    class Features {
+    public static class Features {
         public static final String POPULAR = "popular";
         public static final String HIGHEST_RATED = "highest_rated";
         public static final String UPCOMING = "upcoming";

@@ -9,5 +9,5 @@ import rx.Observable;
  */
 
 public interface RemoteRepository {
-    Observable<Feature> photoByFeature(String feature);
+    Observable<Feature> photoByFeature(String feature,int page);
 }
