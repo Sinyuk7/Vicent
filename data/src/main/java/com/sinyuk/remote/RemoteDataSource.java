@@ -70,7 +70,7 @@ public final class RemoteDataSource implements RemoteRepository {
     }
 
     @Override
-    public Observable<Feature> photoByFeature(String feature) {
+    public Observable<Feature> photoByFeature(String feature, int page) {
         return pxService.getPhotos(feature,page)
                 .compose(new ErrorCheckerTransformer<>());
     }

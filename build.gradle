@@ -46,7 +46,7 @@ ext {
 
         retrofitVersion = '2.1.0'
 
-        rxVersion = '2.0.2'
+        rxVersion = '1.2.1'
 
         daggerVersion = '2.8'
 
@@ -65,8 +65,8 @@ ext {
                 "logging-interceptor"      : "com.squareup.okhttp3:logging-interceptor:3.5.0",
                 "gson"                     : "com.google.code.gson:gson:2.8.0",
                 "eventbus"                 : "org.greenrobot:eventbus:3.0.0",
-                "rxjava"                   : "io.reactivex.rxjava2:rxjava:${rxVersion}",
-                "rxandroid"                : "io.reactivex.rxjava2:rxandroid:2.0.1",
+                "rxjava"                   : "io.reactivex:rxjava:${rxVersion}",
+                "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
                 "rx-preferences"           : "com.f2prateek.rx.preferences:rx-preferences:1.0.2",
                 "dagger"                   : "com.google.dagger:dagger:${daggerVersion}",
                 "dagger-compiler"          : "com.google.dagger:dagger-compiler:${daggerVersion}",

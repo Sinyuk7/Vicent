@@ -1,7 +1,8 @@
 package com.sinyuk.utils;
 
-import rx.Observable;
 import rx.Scheduler;
+import rx.Observable;
+
 
 public final class SchedulerTransformer<T> implements Observable.Transformer<T, T> {
     private final Scheduler subscribeScheduler;

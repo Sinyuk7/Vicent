@@ -13,5 +13,7 @@ import rx.Observable;
 
 public interface PxService {
     @GET("photos")
-    Observable<Response<Feature>> getPhotos(@Query("feature") String feature);
+    Observable<Response<Feature>> getPhotos(
+            @Query("feature") String feature,
+            @Query("page") int page);
 }
