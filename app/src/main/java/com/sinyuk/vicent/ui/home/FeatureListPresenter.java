@@ -3,7 +3,7 @@ package com.sinyuk.vicent.ui.home;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.sinyuk.remote.RemoteDataSource;
+import com.sinyuk.PhotoFeatureUsecase;
 
 import javax.inject.Inject;
 
@@ -15,25 +15,25 @@ import rx.subscriptions.CompositeSubscription;
 
 public class FeatureListPresenter implements FeatureListContract.Presenter {
     @NonNull
-    private final RemoteDataSource remoteDataSource;
-    @NonNull
     private final FeatureListContract.View mView;
+    @NonNull
+    private final PhotoFeatureUsecase mUsecase;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not
      * injected with {@code @Nullable} values.
      */
     @Nullable
-    String feature;
+    private String feature;
 
     @NonNull
     private final CompositeSubscription mSubscriptions;
 
     @Inject
-    public FeatureListPresenter(@NonNull RemoteDataSource remoteDataSource,
+    public FeatureListPresenter(@NonNull PhotoFeatureUsecase usecase,
                                 @Nullable String feature,
                                 @NonNull FeatureListContract.View view) {
-        this.remoteDataSource = remoteDataSource;
+        this.mUsecase = usecase;
         this.feature = feature;
         this.mView = view;
         this.mSubscriptions = new CompositeSubscription();
@@ -57,5 +57,10 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     @Override
     public void unsubscribe() {
         mSubscriptions.clear();
+    }
+
+    @Override
+    public void setFeature(String feature) {
+        this.feature = feature;
     }
 }

@@ -16,7 +16,6 @@ android {
         buildConfigField "String", "CONSUMER_KEY", "\"${cfg.consumer_key}\""
         buildConfigField "String", "CONSUMER_SECRET", "\"${cfg.consumer_secret}\""
         buildConfigField "String", "VERSION", "\"${cfg.versionName}\""
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -46,4 +45,6 @@ dependencies {
     compile cfg.dependencies["eventbus"]
     apt cfg.dependencies["dagger-compiler"]
     compile project(':usecase')
+    compile 'com.github.80998062:MyUtils:2.0.1'
+
 }
