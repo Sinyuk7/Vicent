@@ -31,10 +31,8 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
     @Inject
     public FeatureListPresenter(@NonNull PhotoFeatureUsecase usecase,
-                                @Nullable String feature,
                                 @NonNull FeatureListContract.View view) {
         this.mUsecase = usecase;
-        this.feature = feature;
         this.mView = view;
         this.mSubscriptions = new CompositeSubscription();
     }
@@ -62,5 +60,10 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     @Override
     public void setFeature(String feature) {
         this.feature = feature;
+    }
+
+    @Override
+    public String getFeature() {
+        return feature;
     }
 }

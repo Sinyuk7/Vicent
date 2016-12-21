@@ -14,6 +14,8 @@ public interface FeatureListContract {
 
     interface Presenter extends BasePresenter {
         void setFeature(String feature);
+
+        String getFeature();
     }
 
 }

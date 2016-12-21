@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -71,7 +72,7 @@ public final class RemoteDataSource implements RemoteRepository {
 
     @Override
     public Observable<Feature> photoByFeature(String feature, int page) {
-        return pxService.getPhotos(feature,page)
-                .compose(new ErrorCheckerTransformer<>());
+        return pxService.getPhotos(feature, page)
+                .compose(new ErrorCheckerTransformer<Response<Feature>, Feature>());
     }
 }

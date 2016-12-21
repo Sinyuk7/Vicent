@@ -2,6 +2,7 @@ package com.sinyuk.vicent.injector.modules;
 
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.RemoteDataSource;
+import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
 import com.sinyuk.vicent.BuildConfig;
 import com.sinyuk.vicent.VincentApplication;
@@ -58,7 +59,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RemoteDataSource remoteDataSource(Endpoint endpoint, SigningInterceptor signingInterceptor, File path) {
+    RemoteRepository remoteDataSource(Endpoint endpoint, SigningInterceptor signingInterceptor, File path) {
         return new RemoteDataSource(endpoint, signingInterceptor, path);
     }
 
@@ -72,6 +73,7 @@ public class AppModule {
 
     @Provides
     @Singleton
+    @Named("main")
     Scheduler mainThread() {
         return AndroidSchedulers.mainThread();
     }
@@ -87,7 +89,7 @@ public class AppModule {
     @Provides
     @Singleton
     @Named("io_main")
-    SchedulerTransformer io_main(@Named("io") Scheduler io, Scheduler main) {
+    SchedulerTransformer io_main(@Named("io") Scheduler io, @Named("main") Scheduler main) {
         return new SchedulerTransformer(io, main);
     }
 

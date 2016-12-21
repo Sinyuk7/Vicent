@@ -7,6 +7,7 @@ import com.sinyuk.utils.SchedulerTransformer;
 
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Observable;
 
@@ -23,7 +24,7 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
 
     @Inject
     public PhotoFeatureUsecase(RemoteRepository repository,
-                               SchedulerTransformer<Feature> schedulerTransformer) {
+                               @Named("io_main") SchedulerTransformer schedulerTransformer) {
 
         mRepository = repository;
         mSchedulerTransformer = schedulerTransformer;

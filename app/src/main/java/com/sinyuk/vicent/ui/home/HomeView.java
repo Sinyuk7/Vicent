@@ -3,7 +3,8 @@ package com.sinyuk.vicent.ui.home;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
 
 import com.sinyuk.myutils.android.ActivityUtils;
 import com.sinyuk.vicent.R;
@@ -13,6 +14,8 @@ import com.sinyuk.vicent.databinding.HomeViewBinding;
 import com.sinyuk.vicent.injector.components.DaggerHomeViewComponent;
 import com.sinyuk.vicent.injector.modules.HomeViewModule;
 
+import javax.inject.Inject;
+
 /**
  * Created by sinyuk on 2016/12/20.
  */
@@ -20,6 +23,9 @@ import com.sinyuk.vicent.injector.modules.HomeViewModule;
 public class HomeView extends BaseActivity {
 
     private HomeViewBinding binding;
+
+    @Inject
+    FeatureListPresenter featureListPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +42,15 @@ public class HomeView extends BaseActivity {
         DaggerHomeViewComponent.builder()
                 .appComponent(VincentApplication.get(this).getAppComponent())
                 .homeViewModule(new HomeViewModule(featureList))
-                .build();
+                .build()
+                .inject(this);
 
+        if (featureListPresenter == null) {
+            Log.e(TAG, "featureListPresenter is NULL");
+        }
     }
 
+    public void onSwitch(View view) {
+        featureListPresenter.setFeature("Sinyuk");
+    }
 }
