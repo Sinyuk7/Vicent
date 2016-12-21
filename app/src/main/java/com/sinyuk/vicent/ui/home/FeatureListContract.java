@@ -9,7 +9,7 @@ import com.sinyuk.vicent.base.BaseView;
 
 public interface FeatureListContract {
     interface View extends BaseView<Presenter> {
-
+        
     }
 
     interface Presenter extends BasePresenter {

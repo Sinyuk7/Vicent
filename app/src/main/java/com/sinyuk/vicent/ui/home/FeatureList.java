@@ -32,9 +32,18 @@ public class FeatureList extends BaseFragment implements FeatureListContract.Vie
         return binding.getRoot();
     }
 
+
+
+
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        binding.setText(presenter.getFeature());
+    public void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
     }
 }

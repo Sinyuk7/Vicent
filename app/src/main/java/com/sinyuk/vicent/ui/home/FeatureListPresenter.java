@@ -24,7 +24,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
      * injected with {@code @Nullable} values.
      */
     @Nullable
-    private String feature;
+    private String feature = "popular";
 
     @NonNull
     private final CompositeSubscription mSubscriptions;
@@ -45,6 +45,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     @Inject
     void setupListeners() {
         mView.setPresenter(this);
+
     }
 
     @Override
@@ -58,10 +59,11 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     }
 
     @Override
-    public void setFeature(String feature) {
+    public void setFeature(@Nullable String feature) {
         this.feature = feature;
     }
 
+    @Nullable
     @Override
     public String getFeature() {
         return feature;

@@ -14,6 +14,8 @@ import com.sinyuk.vicent.databinding.HomeViewBinding;
 import com.sinyuk.vicent.injector.components.DaggerHomeViewComponent;
 import com.sinyuk.vicent.injector.modules.HomeViewModule;
 
+import java.util.Random;
+
 import javax.inject.Inject;
 
 /**
@@ -51,6 +53,6 @@ public class HomeView extends BaseActivity {
     }
 
     public void onSwitch(View view) {
-        featureListPresenter.setFeature("Sinyuk");
+        featureListPresenter.setFeature("Roll-> " + new Random().nextInt(10000));
     }
 }
