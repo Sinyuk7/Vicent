@@ -65,6 +65,21 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     }
 
     @Override
+    public void setCategories(String categories) {
+        mUsecase.setCategories(categories);
+    }
+
+    @Override
+    public void setSort(String sort) {
+        mUsecase.setSort(sort);
+    }
+
+    @Override
+    public void setDirection(String direction) {
+        mUsecase.setDirection(direction);
+    }
+
+    @Override
     public void refresh() {
         mSubscriptions.add(mUsecase.load(true)
                 .doOnError(throwable -> {

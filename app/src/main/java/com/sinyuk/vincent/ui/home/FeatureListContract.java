@@ -33,6 +33,12 @@ public interface FeatureListContract {
         // filter
         void setFeature(String feature);
 
+        void setCategories(String categories);
+
+        void setSort(String sort);
+
+        void setDirection(String direction);
+
         // refresh
         void refresh();
 
