@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Vicent</string>
+    <string name="hint_loading">努力加载中…</string>
 </resources>

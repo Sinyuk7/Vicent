@@ -79,7 +79,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
                     @Override
                     public void onNext(Feature feature) {
-                        if (feature != null) {
+                        if (feature.getTotalItems() > 0) {
                             mView.setData(feature);
                         } else {
                             mView.showEmpty("");
@@ -105,7 +105,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
                     @Override
                     public void onNext(Feature feature) {
-                        if (feature != null) {
+                        if (feature.getCurrentPage() > feature.getTotalPages()) {
                             mView.setData(feature);
                         } else {
                             mView.showNoMore("");

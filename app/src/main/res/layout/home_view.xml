@@ -7,10 +7,21 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/featureList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:id="@+id/featureList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <!--<com.yalantis.filter.widget.Filter-->
+            <!--android:id="@+id/filter"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+        </FrameLayout>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -20,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:title="@string/app_name"/>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>

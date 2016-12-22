@@ -3,11 +3,8 @@ package com.sinyuk.vincent.ui.home;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
 
 import com.sinyuk.myutils.android.ActivityUtils;
-import com.sinyuk.remote.Parameters;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.VincentApplication;
 import com.sinyuk.vincent.base.BaseActivity;
@@ -45,14 +42,6 @@ public class HomeView extends BaseActivity {
                 .homeViewModule(new HomeViewModule(featureList))
                 .build()
                 .inject(this);
-
-        if (featureListPresenter == null) {
-            Log.e(TAG, "featureListPresenter is NULL");
-        }
     }
 
-    public void onSwitch(View view) {
-        featureListPresenter.setFeature(Parameters.Features.POPULAR);
-        featureListPresenter.refresh();
-    }
 }

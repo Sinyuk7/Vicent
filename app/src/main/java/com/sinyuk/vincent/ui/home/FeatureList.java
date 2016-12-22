@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fivehundredpx.greedolayout.GreedoLayoutManager;
+import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
 import com.sinyuk.entities.Feature;
+import com.sinyuk.myutils.ConvertUtils;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;
-import com.sinyuk.vincent.databinding.HomeFeatureListBinding;
+import com.sinyuk.vincent.databinding.LayoutStatesBinding;
 
 /**
  * Created by sinyuk on 2016/12/21.
@@ -19,34 +22,58 @@ import com.sinyuk.vincent.databinding.HomeFeatureListBinding;
 
 public class FeatureList extends BaseFragment implements FeatureListContract.View {
     private FeatureListContract.Presenter presenter;
+    private PhotoAdapter photoAdapter;
 
     @Override
     public void setPresenter(FeatureListContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
-    private HomeFeatureListBinding binding;
+    private LayoutStatesBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.home_feature_list, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.layout_states, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initList();
+
+    }
+
+    private void initList() {
+        photoAdapter = new PhotoAdapter();
+        final GreedoLayoutManager layoutManager = new GreedoLayoutManager(photoAdapter);
+        layoutManager.setMaxRowHeight(ConvertUtils.dp2px(getContext(), 160));
+        layoutManager.setAutoMeasureEnabled(true);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setHasFixedSize(true);
+
+        int spacing = ConvertUtils.dp2px(getContext(), 4);
+        binding.recyclerView.addItemDecoration(new GreedoSpacingItemDecoration(spacing));
+
+        photoAdapter.setHasStableIds(true);
+        binding.recyclerView.setAdapter(photoAdapter);
     }
 
     @Override
     public void startRefreshing() {
         Log.d(TAG, "startRefreshing: ");
+        binding.viewAnimator.setDisplayedChildId(R.id.loadingLayout);
     }
 
     @Override
     public void setData(Feature feature) {
-        Log.d(TAG, "setData: " + feature.toString());
+        photoAdapter.setData(feature.getPhotos());
     }
 
     @Override
     public void stopRefreshing() {
-        Log.d(TAG, "stopRefreshing: ");
+        binding.viewAnimator.setDisplayedChildId(R.id.recyclerView);
     }
 
     @Override
@@ -61,7 +88,8 @@ public class FeatureList extends BaseFragment implements FeatureListContract.Vie
 
     @Override
     public void showError(String message) {
-
+        binding.setErrorMessage(message);
+        binding.viewAnimator.setDisplayedChildId(R.id.errorLayout);
     }
 
     @Override
@@ -71,13 +99,15 @@ public class FeatureList extends BaseFragment implements FeatureListContract.Vie
 
     @Override
     public void showEmpty(String message) {
-
+        binding.setEmptyMessage(message);
+        binding.viewAnimator.setDisplayedChildId(R.id.emptyLayout);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+        presenter.refresh();
     }
 
     @Override

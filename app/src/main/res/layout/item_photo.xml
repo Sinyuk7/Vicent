@@ -2,22 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data></data>
+    <data>
 
-    <android.support.v7.widget.CardView
+        <variable
+            name="presenter"
+            type="com.sinyuk.vincent.ui.home.PhotoAdapter"/>
+
+        <variable
+            name="position"
+            type="Integer"/>
+
+        <variable
+            name="data"
+            type="com.sinyuk.entities.Photo"/>
+    </data>
+
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:foreground="?selectableItemBackgroundBorderless"
-        app:cardBackgroundColor="?cardBackgroundColor"
-        app:cardCornerRadius="@dimen/photo_card_radius"
-        app:cardElevation="@dimen/photo_card_elevation">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+        android:onClick="@{(view) -> presenter.onItemClick(view, data,position)}"
+        android:scaleType="centerCrop"
+        app:photo="@{data}"/>
 
 </layout>

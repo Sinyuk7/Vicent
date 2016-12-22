@@ -43,7 +43,7 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BindingViewH
         return hasFooter() && position == getDataItemCount() + (hasHeader() ? 1 : 0);
     }
 
-    private int itemPositionInData(int rvPosition) {
+    protected int itemPositionInData(int rvPosition) {
         return rvPosition - (hasHeader() ? 1 : 0);
     }
 
