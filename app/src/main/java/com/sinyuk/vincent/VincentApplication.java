@@ -1,12 +1,12 @@
-package com.sinyuk.vicent;
+package com.sinyuk.vincent;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.sinyuk.vicent.injector.components.AppComponent;
-import com.sinyuk.vicent.injector.components.DaggerAppComponent;
-import com.sinyuk.vicent.injector.modules.AppModule;
+import com.sinyuk.vincent.injector.components.AppComponent;
+import com.sinyuk.vincent.injector.components.DaggerAppComponent;
+import com.sinyuk.vincent.injector.modules.AppModule;
 
 /**
  * Created by sinyuk on 2016/12/20.

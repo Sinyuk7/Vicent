@@ -1,6 +1,6 @@
-package com.sinyuk.vicent.injector.modules;
+package com.sinyuk.vincent.injector.modules;
 
-import com.sinyuk.vicent.ui.home.FeatureListContract;
+import com.sinyuk.vincent.ui.home.FeatureListContract;
 
 import dagger.Module;
 import dagger.Provides;

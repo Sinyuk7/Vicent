@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by sinyuk on 2016/12/10.
@@ -30,15 +32,33 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
         mSchedulerTransformer = schedulerTransformer;
     }
 
-    @Override
-    public Observable<Feature> buildObservable() {
-        return mRepository.photoByFeature(feature, page)
-                .compose(mSchedulerTransformer);
-    }
 
+    public Observable<Feature> load(final boolean clear){
+        return buildObservable()
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        if (clear){
+                            resetOffset();
+                        }
+                    }
+                })
+                .doOnNext(new Action1<Feature>() {
+                    @Override
+                    public void call(Feature feature) {
+                        if (feature != null) {
+                            increaseOffset();
+                        }
+                    }
+                });
+    }
 
     public void setFeature( String feature) {
         this.feature = feature;
+    }
+
+    public String getFeature() {
+        return feature;
     }
 
     @Override
@@ -49,5 +69,11 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
     @Override
     public void resetOffset() {
         page = 1;
+    }
+
+    @Override
+    protected Observable<Feature> buildObservable() {
+        return mRepository.photoByFeature(feature, page)
+                .compose(mSchedulerTransformer);
     }
 }

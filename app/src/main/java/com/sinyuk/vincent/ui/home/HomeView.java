@@ -1,4 +1,4 @@
-package com.sinyuk.vicent.ui.home;
+package com.sinyuk.vincent.ui.home;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,14 +7,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.sinyuk.myutils.android.ActivityUtils;
-import com.sinyuk.vicent.R;
-import com.sinyuk.vicent.VincentApplication;
-import com.sinyuk.vicent.base.BaseActivity;
-import com.sinyuk.vicent.databinding.HomeViewBinding;
-import com.sinyuk.vicent.injector.components.DaggerHomeViewComponent;
-import com.sinyuk.vicent.injector.modules.HomeViewModule;
-
-import java.util.Random;
+import com.sinyuk.remote.Parameters;
+import com.sinyuk.vincent.R;
+import com.sinyuk.vincent.VincentApplication;
+import com.sinyuk.vincent.base.BaseActivity;
+import com.sinyuk.vincent.databinding.HomeViewBinding;
+import com.sinyuk.vincent.injector.components.DaggerHomeViewComponent;
+import com.sinyuk.vincent.injector.modules.HomeViewModule;
 
 import javax.inject.Inject;
 
@@ -53,6 +52,7 @@ public class HomeView extends BaseActivity {
     }
 
     public void onSwitch(View view) {
-        featureListPresenter.setFeature("Roll-> " + new Random().nextInt(10000));
+        featureListPresenter.setFeature(Parameters.Features.POPULAR);
+        featureListPresenter.refresh();
     }
 }

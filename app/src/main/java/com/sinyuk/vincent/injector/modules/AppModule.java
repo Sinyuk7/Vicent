@@ -1,11 +1,11 @@
-package com.sinyuk.vicent.injector.modules;
+package com.sinyuk.vincent.injector.modules;
 
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.RemoteDataSource;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
-import com.sinyuk.vicent.BuildConfig;
-import com.sinyuk.vicent.VincentApplication;
+import com.sinyuk.vincent.BuildConfig;
+import com.sinyuk.vincent.VincentApplication;
 
 import java.io.File;
 

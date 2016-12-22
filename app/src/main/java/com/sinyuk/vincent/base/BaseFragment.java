@@ -1,4 +1,4 @@
-package com.sinyuk.vicent.base;
+package com.sinyuk.vincent.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

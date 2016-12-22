@@ -1,8 +1,8 @@
-package com.sinyuk.vicent.injector.components;
+package com.sinyuk.vincent.injector.components;
 
-import com.sinyuk.vicent.injector.modules.HomeViewModule;
-import com.sinyuk.vicent.injector.scopes.FragmentScoped;
-import com.sinyuk.vicent.ui.home.HomeView;
+import com.sinyuk.vincent.injector.modules.HomeViewModule;
+import com.sinyuk.vincent.injector.scopes.FragmentScoped;
+import com.sinyuk.vincent.ui.home.HomeView;
 
 import dagger.Component;
 

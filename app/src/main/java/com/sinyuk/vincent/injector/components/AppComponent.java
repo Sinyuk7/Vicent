@@ -1,10 +1,10 @@
-package com.sinyuk.vicent.injector.components;
+package com.sinyuk.vincent.injector.components;
 
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
-import com.sinyuk.vicent.VincentApplication;
-import com.sinyuk.vicent.injector.modules.AppModule;
+import com.sinyuk.vincent.VincentApplication;
+import com.sinyuk.vincent.injector.modules.AppModule;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
