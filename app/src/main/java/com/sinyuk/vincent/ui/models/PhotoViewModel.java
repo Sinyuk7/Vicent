@@ -11,6 +11,8 @@ import com.sinyuk.entities.Photo;
  */
 
 public class PhotoViewModel {
+    private static final String TAG = "PhotoViewModel";
+
     @BindingAdapter("photo")
     public static void loadPhoto(ImageView imageView, Photo photo) {
         String url = photo.getImages().get(0).getUrl();

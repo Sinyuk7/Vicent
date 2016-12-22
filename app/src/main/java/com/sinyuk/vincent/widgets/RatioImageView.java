@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.sinyuk.vincent.R;
 
 
@@ -35,6 +34,14 @@ public class RatioImageView extends ImageView {
         }
     }
 
+    public void setHorizontalRatio(float horizontalRatio) {
+        this.horizontalRatio = horizontalRatio;
+    }
+
+    public void setVerticalRatio(float verticalRatio) {
+        this.verticalRatio = verticalRatio;
+    }
+
     public RatioImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -56,12 +63,5 @@ public class RatioImageView extends ImageView {
         } else {
             super.onMeasure(widthSpec, heightSpec);
         }
-    }
-
-    public void setUrl(String url) {
-        Glide.with(getContext())
-                .load(url)
-                .crossFade(500)
-                .into(this);
     }
 }
