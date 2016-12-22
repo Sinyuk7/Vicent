@@ -12,8 +12,6 @@ public final class Feature {
 
     @SerializedName("feature")
     private String feature;
-    @SerializedName("filters")
-    private Filters filters;
     @SerializedName("current_page")
     private int currentPage;
     @SerializedName("total_pages")
@@ -29,14 +27,6 @@ public final class Feature {
 
     public void setFeature(String feature) {
         this.feature = feature;
-    }
-
-    public Filters getFilters() {
-        return filters;
-    }
-
-    public void setFilters(Filters filters) {
-        this.filters = filters;
     }
 
     public int getCurrentPage() {
@@ -69,33 +59,5 @@ public final class Feature {
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
-    }
-
-    public static class Filters {
-        /**
-         * category : false
-         * exclude : false
-         */
-
-        @SerializedName("category")
-        private boolean category;
-        @SerializedName("exclude")
-        private int exclude;
-
-        public boolean isCategory() {
-            return category;
-        }
-
-        public void setCategory(boolean category) {
-            this.category = category;
-        }
-
-        public int isExclude() {
-            return exclude;
-        }
-
-        public void setExclude(int exclude) {
-            this.exclude = exclude;
-        }
     }
 }

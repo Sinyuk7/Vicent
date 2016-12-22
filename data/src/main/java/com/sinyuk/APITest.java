@@ -25,7 +25,7 @@ public class APITest {
     private static void test(RemoteDataSource remoteDataSource) {
         System.out.println("test");
 
-        remoteDataSource.photoByFeature("popular", 1)
+        remoteDataSource.photoByFeature("popular", "", "", "", 1)
                 .subscribe(new Observer<Feature>() {
                     @Override
                     public void onCompleted() {

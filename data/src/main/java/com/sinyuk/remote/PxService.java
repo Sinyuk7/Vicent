@@ -12,8 +12,11 @@ import rx.Observable;
  */
 
 public interface PxService {
-    @GET("photos?image_size=440,600,1080")
+    @GET("photos?image_size=440,600,1080?tags=true")
     Observable<Response<Feature>> getPhotos(
             @Query("feature") String feature,
+            @Query("only") String categories,
+            @Query("sort") String sort,
+            @Query("sort_direction") String sort_direction,
             @Query("page") int page);
 }

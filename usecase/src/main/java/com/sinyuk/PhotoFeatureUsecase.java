@@ -22,6 +22,11 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
     private final RemoteRepository mRepository;
     private final SchedulerTransformer<Feature> mSchedulerTransformer;
     private String feature = Parameters.Features.POPULAR;
+    private String categories;
+    private String direction;
+
+
+    private String sort;
     private int page = 1;
 
     @Inject
@@ -67,6 +72,31 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
         return feature;
     }
 
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+
     @Override
     public void increaseOffset() {
         page++;
@@ -79,7 +109,7 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
 
     @Override
     protected Observable<Feature> buildObservable() {
-        return mRepository.photoByFeature(feature, page)
+        return mRepository.photoByFeature(feature, categories, sort, direction, page)
                 .compose(mSchedulerTransformer);
     }
 }
