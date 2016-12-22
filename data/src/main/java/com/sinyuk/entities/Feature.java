@@ -80,7 +80,7 @@ public final class Feature {
         @SerializedName("category")
         private boolean category;
         @SerializedName("exclude")
-        private boolean exclude;
+        private int exclude;
 
         public boolean isCategory() {
             return category;
@@ -90,11 +90,11 @@ public final class Feature {
             this.category = category;
         }
 
-        public boolean isExclude() {
+        public int isExclude() {
             return exclude;
         }
 
-        public void setExclude(boolean exclude) {
+        public void setExclude(int exclude) {
             this.exclude = exclude;
         }
     }

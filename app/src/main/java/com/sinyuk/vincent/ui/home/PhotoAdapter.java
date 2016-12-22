@@ -41,9 +41,10 @@ public class PhotoAdapter extends BaseRvAdapter<Photo> implements GreedoLayoutSi
 
     @Override
     public double aspectRatioForIndex(int index) {
-        if (index > getDataItemCount()) return 1.0;
+        if (index >= getDataItemCount()) return 1.0;
 
-        return mDataSet.get(itemPositionInData(index)).getWidth() / mDataSet.get(itemPositionInData(index)).getHeight();
+        return 1.f * mDataSet.get(itemPositionInData(index)).getWidth() /
+                (1.f * mDataSet.get(itemPositionInData(index)).getHeight());
     }
 
     public void onItemClick(View view, Photo photo, int position) {

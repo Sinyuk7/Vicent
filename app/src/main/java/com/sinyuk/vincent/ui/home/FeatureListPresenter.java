@@ -2,6 +2,7 @@ package com.sinyuk.vincent.ui.home;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.sinyuk.PhotoFeatureUsecase;
 import com.sinyuk.entities.Feature;
@@ -16,6 +17,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public class FeatureListPresenter implements FeatureListContract.Presenter {
+    private static final String TAG = "FeatureListPresenter";
     @NonNull
     private final FeatureListContract.View mView;
     @NonNull
@@ -65,6 +67,10 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     @Override
     public void refresh() {
         mSubscriptions.add(mUsecase.load(true)
+                .doOnError(throwable -> {
+                    throwable.printStackTrace();
+                    Log.d(TAG, "call: ");
+                })
                 .doOnSubscribe(mView::startRefreshing)
                 .subscribe(new Observer<Feature>() {
                     @Override
@@ -74,6 +80,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         mView.showError(e.getMessage());
                     }
 

@@ -33,12 +33,12 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
     }
 
 
-    public Observable<Feature> load(final boolean clear){
+    public Observable<Feature> load(final boolean clear) {
         return buildObservable()
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        if (clear){
+                        if (clear) {
                             resetOffset();
                         }
                     }
@@ -50,10 +50,16 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
                             increaseOffset();
                         }
                     }
+                })
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
                 });
     }
 
-    public void setFeature( String feature) {
+    public void setFeature(String feature) {
         this.feature = feature;
     }
 
