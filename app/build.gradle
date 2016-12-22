@@ -38,6 +38,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile cfg.dependencies["support-design"]
     compile cfg.dependencies["appcompat-v7"]
+    compile cfg.dependencies["cardView"]
     compile cfg.dependencies["recyclerView"]
     compile cfg.dependencies["glide"]
     compile cfg.dependencies["rxandroid"]
@@ -46,5 +47,13 @@ dependencies {
     apt cfg.dependencies["dagger-compiler"]
     compile project(':usecase')
     compile 'com.github.80998062:MyUtils:2.0.1'
+
+
+    // search filter
+    compile 'com.github.yalantis:searchfilter:v1.0.1'
+
+    // layout manager
+    compile 'com.fivehundredpx:greedo-layout:1.0.0'
+
 
 }
