@@ -1,8 +1,10 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.RemoteDataSource;
+
+import java.util.List;
 
 import rx.Observer;
 import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer;
@@ -26,7 +28,7 @@ public class APITest {
         System.out.println("test");
 
         remoteDataSource.photoByFeature("popular", "", "", "", 1)
-                .subscribe(new Observer<Feature>() {
+                .subscribe(new Observer<List<Photo>>() {
                     @Override
                     public void onCompleted() {
                         System.out.println("Completed");
@@ -38,7 +40,7 @@ public class APITest {
                     }
 
                     @Override
-                    public void onNext(Feature feature) {
+                    public void onNext(List<Photo> feature) {
                         System.out.println(feature.toString());
                     }
                 });

@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.sinyuk.PhotoFeatureUsecase;
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -100,7 +102,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
                     Log.d(TAG, "call: ");
                 })
                 .doOnSubscribe(mView::startRefreshing)
-                .subscribe(new Observer<Feature>() {
+                .subscribe(new Observer<List<Photo>>() {
                     @Override
                     public void onCompleted() {
                         mView.stopRefreshing();
@@ -113,9 +115,9 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Feature feature) {
-                        if (feature.getTotalItems() > 0) {
-                            mView.setData(feature);
+                    public void onNext(List<Photo> photos) {
+                        if (!photos.isEmpty()) {
+                            mView.setData(photos);
                         } else {
                             mView.showEmpty("");
                         }
@@ -127,7 +129,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     public void load() {
         mSubscriptions.add(mUsecase.load(false)
                 .doOnSubscribe(mView::startLoading)
-                .subscribe(new Observer<Feature>() {
+                .subscribe(new Observer<List<Photo>>() {
                     @Override
                     public void onCompleted() {
                         mView.stopLoading();
@@ -139,9 +141,9 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Feature feature) {
-                        if (feature.getCurrentPage() > feature.getTotalPages()) {
-                            mView.setData(feature);
+                    public void onNext(List<Photo> photos) {
+                        if (!photos.isEmpty()) {
+                            mView.setData(photos);
                         } else {
                             mView.showNoMore("");
                         }

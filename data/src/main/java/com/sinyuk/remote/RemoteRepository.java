@@ -1,6 +1,8 @@
 package com.sinyuk.remote;
 
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -9,9 +11,9 @@ import rx.Observable;
  */
 
 public interface RemoteRepository {
-    Observable<Feature> photoByFeature(String feature,
-                                       String categories,
-                                       String sort,
-                                       String sort_direction,
-                                       int page);
+    Observable<List<Photo>>  photoByFeature(String feature,
+                                            String categories,
+                                            String sort,
+                                            String sort_direction,
+                                            int page);
 }

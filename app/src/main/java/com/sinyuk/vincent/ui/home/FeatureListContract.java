@@ -1,8 +1,10 @@
 package com.sinyuk.vincent.ui.home;
 
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
 import com.sinyuk.vincent.base.BasePresenter;
 import com.sinyuk.vincent.base.BaseView;
+
+import java.util.List;
 
 /**
  * Created by sinyuk on 2016/12/21.
@@ -11,7 +13,7 @@ import com.sinyuk.vincent.base.BaseView;
 public interface FeatureListContract {
     interface View extends BaseView<Presenter> {
 
-        void setData(Feature feature);
+        void setData(List<Photo> photos);
 
         void startRefreshing();
 

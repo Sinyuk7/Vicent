@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutManager;
 import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
 import com.sinyuk.myutils.ConvertUtils;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;
 import com.sinyuk.vincent.databinding.LayoutStatesBinding;
+
+import java.util.List;
 
 /**
  * Created by sinyuk on 2016/12/21.
@@ -67,8 +69,8 @@ public class FeatureList extends BaseFragment implements FeatureListContract.Vie
     }
 
     @Override
-    public void setData(Feature feature) {
-        photoAdapter.setData(feature.getPhotos());
+    public void setData(List<Photo> photos) {
+        photoAdapter.setData(photos);
     }
 
     @Override

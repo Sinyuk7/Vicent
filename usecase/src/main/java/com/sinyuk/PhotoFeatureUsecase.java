@@ -1,8 +1,10 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,10 +17,10 @@ import rx.functions.Action1;
  * Created by sinyuk on 2016/12/10.
  */
 
-public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase {
+public class PhotoFeatureUsecase extends Usecase<List<Photo>> implements ListUsecase {
 
     private final RemoteRepository mRepository;
-    private final SchedulerTransformer<Feature> mSchedulerTransformer;
+    private final SchedulerTransformer<List<Photo>> mSchedulerTransformer;
     private String feature;
     private String categories;
     private String direction;
@@ -28,13 +30,12 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
     @Inject
     public PhotoFeatureUsecase(RemoteRepository repository,
                                @Named("io_main") SchedulerTransformer schedulerTransformer) {
-
         mRepository = repository;
         mSchedulerTransformer = schedulerTransformer;
     }
 
 
-    public Observable<Feature> load(final boolean clear) {
+    public Observable<List<Photo>> load(final boolean clear) {
         return buildObservable()
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -44,9 +45,9 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
                         }
                     }
                 })
-                .doOnNext(new Action1<Feature>() {
+                .doOnNext(new Action1<List<Photo>>() {
                     @Override
-                    public void call(Feature feature) {
+                    public void call(List<Photo> feature) {
                         if (feature != null) {
                             increaseOffset();
                         }
@@ -104,7 +105,7 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
     }
 
     @Override
-    protected Observable<Feature> buildObservable() {
+    protected Observable<List<Photo>> buildObservable() {
         return mRepository.photoByFeature(feature, categories, sort, direction, page)
                 .compose(mSchedulerTransformer);
     }

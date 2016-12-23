@@ -3,9 +3,11 @@ package com.sinyuk.remote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinyuk.entities.Feature;
+import com.sinyuk.entities.Photo;
 import com.sinyuk.utils.ErrorCheckerTransformer;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.functions.Func1;
 import se.akerfeldt.okhttp.signpost.SigningInterceptor;
 
 /**
@@ -71,13 +74,19 @@ public final class RemoteDataSource implements RemoteRepository {
     }
 
     @Override
-    public Observable<Feature> photoByFeature(
+    public Observable<List<Photo>> photoByFeature(
             String feature,
             String categories,
             String sort,
             String sort_direction,
             int page) {
         return pxService.getPhotos(feature, categories, sort, sort_direction, page)
-                .compose(new ErrorCheckerTransformer<Response<Feature>, Feature>());
+                .compose(new ErrorCheckerTransformer<Response<Feature>, Feature>())
+                .map(new Func1<Feature, List<Photo>>() {
+                    @Override
+                    public List<Photo> call(Feature feature) {
+                        return feature.getPhotos();
+                    }
+                });
     }
 }
