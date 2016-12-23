@@ -24,6 +24,7 @@ public class HomeView extends BaseActivity {
 
     @Inject
     FeatureListPresenter featureListPresenter;
+    private int[] mColors;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class HomeView extends BaseActivity {
                 .homeViewModule(new HomeViewModule(featureList))
                 .build()
                 .inject(this);
-    }
 
+
+    }
 }

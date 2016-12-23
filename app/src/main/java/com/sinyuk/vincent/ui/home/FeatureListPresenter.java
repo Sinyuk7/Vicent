@@ -61,22 +61,35 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
     @Override
     public void setFeature(@Nullable String feature) {
+
         mUsecase.setFeature(feature);
+        refresh();
+
     }
 
     @Override
     public void setCategories(String categories) {
+
         mUsecase.setCategories(categories);
+        refresh();
+
+
     }
 
     @Override
     public void setSort(String sort) {
+
         mUsecase.setSort(sort);
+        refresh();
+
     }
 
     @Override
     public void setDirection(String direction) {
+
         mUsecase.setDirection(direction);
+        refresh();
+
     }
 
     @Override

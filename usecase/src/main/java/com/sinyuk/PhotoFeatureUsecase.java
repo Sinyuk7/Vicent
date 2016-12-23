@@ -1,10 +1,8 @@
 package com.sinyuk;
 
 import com.sinyuk.entities.Feature;
-import com.sinyuk.remote.Parameters;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
-
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,11 +19,9 @@ public class PhotoFeatureUsecase extends Usecase<Feature> implements ListUsecase
 
     private final RemoteRepository mRepository;
     private final SchedulerTransformer<Feature> mSchedulerTransformer;
-    private String feature = Parameters.Features.POPULAR;
+    private String feature;
     private String categories;
     private String direction;
-
-
     private String sort;
     private int page = 1;
 
