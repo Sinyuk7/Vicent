@@ -33,7 +33,7 @@ public interface TimelineContract {
 
     interface Presenter extends BasePresenter {
         // filter
-        void setFeature(String feature);
+        void setFeature(int feature);
 
         void refresh();
 

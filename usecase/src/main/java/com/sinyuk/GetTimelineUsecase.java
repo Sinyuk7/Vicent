@@ -19,8 +19,8 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
 
     private final RemoteRepository mRepository;
     private final SchedulerTransformer<Timeline> mSchedulerTransformer;
-    private String feature;
-    private int page = 0;
+    private int feature = 2;
+    private int page = 1;
 
     @Inject
     GetTimelineUsecase(RemoteRepository repository,
@@ -50,11 +50,11 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                 });
     }
 
-    public void setFeature(String feature) {
+    public void setFeature(int feature) {
         this.feature = feature;
     }
 
-    public String getFeature() {
+    public int getFeature() {
         return feature;
     }
 

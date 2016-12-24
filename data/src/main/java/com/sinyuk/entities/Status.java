@@ -88,7 +88,7 @@ public class Status {
         this.picUrls = picUrls;
     }
 
-    private static class PicUrls {
+    public static class PicUrls {
         /**
          * thumbnail_pic : http://ww1.sinaimg.cn/thumbnail/42b97fafgw1fb1n72ldcmg208m05yx6p.gif
          */

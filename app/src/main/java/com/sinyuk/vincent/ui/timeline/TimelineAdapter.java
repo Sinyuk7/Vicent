@@ -1,0 +1,166 @@
+package com.sinyuk.vincent.ui.timeline;
+
+import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
+import com.sinyuk.entities.Status;
+import com.sinyuk.myutils.system.ScreenUtils;
+import com.sinyuk.vincent.BR;
+import com.sinyuk.vincent.R;
+import com.sinyuk.vincent.databinding.ItemStatusBinding;
+import com.sinyuk.vincent.utils.rv.BaseRvAdapter;
+import com.sinyuk.vincent.utils.rv.BindingViewHolder;
+import com.sinyuk.vincent.utils.rv.GridSpacingItemDecoration;
+import com.sinyuk.vincent.viewmodels.StatusModel;
+import com.sinyuk.vincent.widgets.SquareImageView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by sinyuk on 2016/12/24.
+ */
+
+public class TimelineAdapter extends BaseRvAdapter<Status> {
+
+    private final int spacing;
+    private final int screenWidth;
+    private final int thirdW;
+
+    public TimelineAdapter(Context context) {
+        spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
+        screenWidth = ScreenUtils.getScreenWidth(context);
+        thirdW = (screenWidth - 2 * spacing) / 3;
+    }
+
+    @Override
+    protected long getMyItemId(int position) {
+        if (mDataSet.get(position) == null)
+            return RecyclerView.NO_ID;
+        return mDataSet.get(position).getId();
+    }
+
+    @Override
+    protected BindingViewHolder onCreateMyItemViewHolder(ViewGroup parent, int viewType) {
+        final ItemStatusBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_status, parent, false);
+        return new BindingViewHolder<>(binding);
+    }
+
+    @Override
+    protected void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData) {
+        final Status data = mDataSet.get(itemPositionInData);
+
+        holder.getBinding().setVariable(BR.data, data);
+
+        if (data.getPicUrls() != null) {
+            int spanCount = 1;
+            switch (data.getPicUrls().size()) {
+                case 1:
+                    spanCount = 1;
+                    break;
+                case 7:
+                    spanCount = 7;
+                    break;
+                case 5:
+                    spanCount = 5;
+                    break;
+                case 4:
+                case 2:
+                case 6:
+                case 8:
+                    spanCount = 2;
+                    break;
+                case 9:
+                case 3:
+                    spanCount = 3;
+                    break;
+
+            }
+            int finalSpanCount = spanCount;
+            final GridLayoutManager layoutManager = new GridLayoutManager(holder.getBinding().getRoot().getContext(), finalSpanCount) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+
+                @Override
+                public boolean canScrollHorizontally() {
+                    return finalSpanCount == 7 || finalSpanCount == 5;
+                }
+            };
+            layoutManager.setAutoMeasureEnabled(true);
+
+            ((ItemStatusBinding) holder.getBinding()).gridView.setLayoutManager(layoutManager);
+            ((ItemStatusBinding) holder.getBinding()).gridView.addItemDecoration(new GridSpacingItemDecoration(finalSpanCount, spacing, false));
+
+            ((ItemStatusBinding) holder.getBinding()).gridView.setHasFixedSize(true);
+
+            ((ItemStatusBinding) holder.getBinding()).gridView.setAdapter(new PhotoCellAdapter(data.getPicUrls(), spanCount));
+        }
+
+
+        holder.getBinding().executePendingBindings();
+    }
+
+    private class PhotoCellAdapter extends RecyclerView.Adapter<PhotoCellAdapter.PhotoCell> {
+
+        private final int spanCount;
+        private List<Status.PicUrls> picUrls = new ArrayList<>();
+
+        PhotoCellAdapter(List<Status.PicUrls> picUrls, int spanCount) {
+            this.picUrls = picUrls;
+            this.spanCount = spanCount;
+        }
+
+        @Override
+        public PhotoCellAdapter.PhotoCell onCreateViewHolder(ViewGroup parent, int viewType) {
+            final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_photo_cell, parent, false);
+            return new PhotoCell(view);
+        }
+
+        @Override
+        public void onBindViewHolder(PhotoCell holder, int position) {
+
+            Glide.with(holder.imageView.getContext())
+                    .load(StatusModel.getPicUrl(
+                            picUrls.get(position).getThumbnailPic(),
+                            spanCount))
+                    .crossFade(300)
+                    .into(holder.imageView);
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return picUrls.size();
+        }
+
+        class PhotoCell extends RecyclerView.ViewHolder {
+
+            private SquareImageView imageView;
+
+            PhotoCell(View itemView) {
+                super(itemView);
+                imageView = (SquareImageView) itemView.findViewById(R.id.photo);
+                if (spanCount == 7 || spanCount == 5 || spanCount == 3) {
+                    imageView.setMaxWidth(thirdW);
+                }
+
+                imageView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return false;
+                    }
+                });
+            }
+        }
+
+    }
+}

@@ -40,6 +40,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     @Inject
     void setupListeners() {
         mView.setPresenter(this);
+
     }
 
 
@@ -55,7 +56,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
 
     @Override
-    public void setFeature(String feature) {
+    public void setFeature(int feature) {
         mUsecase.setFeature(feature);
     }
 

@@ -76,7 +76,7 @@ public final class RemoteDataSource implements RemoteRepository {
 
 
     @Override
-    public Observable<Timeline> friends_timeline(int page, String feature) {
+    public Observable<Timeline> friends_timeline(int page, int feature) {
         return weiboService.friends_timeline(page, feature)
                 .compose(new ErrorCheckerTransformer<Response<Timeline>, Timeline>());
     }

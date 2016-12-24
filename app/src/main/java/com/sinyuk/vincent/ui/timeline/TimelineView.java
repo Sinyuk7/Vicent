@@ -3,6 +3,7 @@ package com.sinyuk.vincent.ui.timeline;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class TimelineView extends BaseFragment implements TimelineContract.View {
     private TimelineContract.Presenter presenter;
+    private TimelineAdapter adapter;
 
     @Override
     public void setPresenter(TimelineContract.Presenter presenter) {
@@ -38,13 +40,26 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initList();
+        presenter.subscribe();
+        presenter.refresh();
+    }
+
+    private void initList() {
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setAutoMeasureEnabled(true);
+
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.setHasFixedSize(true);
+
+        adapter = new TimelineAdapter(getContext());
+        adapter.setHasStableIds(true);
+        binding.recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
-        presenter.refresh();
     }
 
     @Override
@@ -55,7 +70,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     @Override
     public void setData(List<Status> photos) {
-
+        adapter.setData(photos);
     }
 
     @Override
@@ -65,7 +80,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     @Override
     public void stopRefreshing() {
-
+        binding.viewAnimator.setDisplayedChildId(R.id.recyclerView);
     }
 
     @Override

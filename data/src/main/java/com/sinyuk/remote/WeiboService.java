@@ -18,5 +18,5 @@ public interface WeiboService {
     @GET("statuses/friends_timeline.json")
     Observable<Response<Timeline>> friends_timeline(
             @Query("page") int page,
-            @Query("feature") String feature);
+            @Query("feature") int feature);
 }
