@@ -5,7 +5,6 @@ import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.OauthManager;
 import com.sinyuk.remote.RemoteDataSource;
 import com.sinyuk.remote.RemoteRepository;
-import com.sinyuk.vincent.Prefs;
 
 import java.io.File;
 
@@ -25,7 +24,8 @@ public class ApiModule {
     @Singleton
     @Named("token")
     String token(RxSharedPreferences preferences) {
-        return preferences.getString(Prefs.KEY_TOKEN).get();
+        return "2.00MlrnQD0sdoPv864caed419nQccYE";
+//        return preferences.getString(Prefs.KEY_TOKEN).get();
     }
 
     @Provides
@@ -38,7 +38,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    RemoteRepository remoteDataSource(Endpoint endpoint, @Named("token") String accessToken, File path) {
+    RemoteRepository remoteDataSource(@Named("api") Endpoint endpoint, @Named("token") String accessToken, File path) {
         return new RemoteDataSource(endpoint, accessToken, path);
     }
 

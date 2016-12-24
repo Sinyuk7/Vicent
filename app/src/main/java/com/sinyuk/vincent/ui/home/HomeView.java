@@ -6,9 +6,14 @@ import android.support.annotation.Nullable;
 
 import com.sinyuk.myutils.android.ActivityUtils;
 import com.sinyuk.vincent.R;
+import com.sinyuk.vincent.VincentApplication;
 import com.sinyuk.vincent.base.BaseActivity;
 import com.sinyuk.vincent.databinding.HomeViewBinding;
+import com.sinyuk.vincent.injector.modules.HomeViewModule;
+import com.sinyuk.vincent.ui.timeline.TimelinePresenter;
 import com.sinyuk.vincent.ui.timeline.TimelineView;
+
+import javax.inject.Inject;
 
 /**
  * Created by sinyuk on 2016/12/20.
@@ -18,9 +23,8 @@ public class HomeView extends BaseActivity {
 
     private HomeViewBinding binding;
 
-//    @Inject
-//    TimelinePresenter timelinePresenter;
-    private int[] mColors;
+    @Inject
+    TimelinePresenter timelinePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,12 +38,8 @@ public class HomeView extends BaseActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), timelineView, R.id.timeline_fragment);
         }
 
-//        DaggerHomeViewComponent.builder()
-//                .appComponent(VincentApplication.get(this).getAppComponent())
-//                .homeViewModule(new HomeViewModule(timelineView))
-//                .build()
-//                .inject(this);
-
+        VincentApplication.get(this).getAppComponent()
+                .plus(new HomeViewModule(timelineView)).inject(this);
 
     }
 }

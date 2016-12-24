@@ -1,6 +1,6 @@
 package com.sinyuk.vincent.injector.modules;
 
-import com.sinyuk.vincent.injector.scopes.FragmentScoped;
+import com.sinyuk.vincent.injector.scopes.ActivityScope;
 import com.sinyuk.vincent.ui.timeline.TimelineContract;
 
 import dagger.Module;
@@ -23,7 +23,7 @@ public class HomeViewModule {
     }
 
     @Provides
-    @FragmentScoped
+    @ActivityScope
     TimelineContract.View timelineView() {
         return timelineView;
     }

@@ -11,6 +11,6 @@ import dagger.Subcomponent;
  */
 @ActivityScope
 @Subcomponent(modules = HomeViewModule.class)
-interface HomeViewComponent {
+public interface HomeViewComponent {
     void inject(HomeView homeView);
 }
