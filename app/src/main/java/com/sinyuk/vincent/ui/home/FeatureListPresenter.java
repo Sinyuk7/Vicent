@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.sinyuk.PhotoFeatureUsecase;
-import com.sinyuk.entities.Photo;
 
 import java.util.List;
 

@@ -2,15 +2,15 @@ package com.sinyuk.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sinyuk.entities.Feature;
-import com.sinyuk.entities.Photo;
+import com.sinyuk.entities.Timeline;
 import com.sinyuk.utils.ErrorCheckerTransformer;
+import com.sinyuk.utils.OauthInterceptor;
 
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -19,9 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Query;
 import rx.Observable;
-import rx.functions.Func1;
-import se.akerfeldt.okhttp.signpost.SigningInterceptor;
 
 /**
  * Created by sinyuk on 2016/12/9.
@@ -31,12 +30,16 @@ public final class RemoteDataSource implements RemoteRepository {
 
     private static final long MAX_CACHE = 1024 * 1024 * 100;
 
-    private PxService pxService;
+    private WeiboService weiboService;
 
     @Inject
-    public RemoteDataSource(Endpoint endpoint, SigningInterceptor signingInterceptor, File path) {
+    public RemoteDataSource(@Named("api") Endpoint endpoint,
+                            @Named("token") String token,
+                            File path) {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.addInterceptor(new OauthInterceptor(token));
 
         if (path != null) {
             final Cache cache = new Cache(path, MAX_CACHE);
@@ -47,7 +50,6 @@ public final class RemoteDataSource implements RemoteRepository {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor);
 
-        builder.addInterceptor(signingInterceptor);
 
         //设置超时
         builder.connectTimeout(30, TimeUnit.SECONDS);
@@ -70,23 +72,15 @@ public final class RemoteDataSource implements RemoteRepository {
                 .client(builder.build())
                 .build();
 
-        pxService = adapter.create(PxService.class);
+        weiboService = adapter.create(WeiboService.class);
     }
 
+
     @Override
-    public Observable<List<Photo>> photoByFeature(
-            String feature,
-            String categories,
-            String sort,
-            String sort_direction,
-            int page) {
-        return pxService.getPhotos(feature, categories, sort, sort_direction, page)
-                .compose(new ErrorCheckerTransformer<Response<Feature>, Feature>())
-                .map(new Func1<Feature, List<Photo>>() {
-                    @Override
-                    public List<Photo> call(Feature feature) {
-                        return feature.getPhotos();
-                    }
-                });
+    public Observable<Timeline> friends_timeline(
+            @Query("since_id") String sinceId,
+            @Query("feature") String feature) {
+        return weiboService.friends_timeline(sinceId, feature)
+                .compose(new ErrorCheckerTransformer<Response<Timeline>, Timeline>());
     }
 }

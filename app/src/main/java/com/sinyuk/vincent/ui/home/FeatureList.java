@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutManager;
 import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
-import com.sinyuk.entities.Photo;
 import com.sinyuk.myutils.ConvertUtils;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;

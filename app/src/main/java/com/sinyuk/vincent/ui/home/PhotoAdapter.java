@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutSizeCalculator;
-import com.sinyuk.entities.Photo;
 import com.sinyuk.vincent.BR;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.utils.rv.BaseRvAdapter;

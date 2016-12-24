@@ -1,6 +1,5 @@
 package com.sinyuk.vincent.ui.home;
 
-import com.sinyuk.entities.Photo;
 import com.sinyuk.vincent.base.BasePresenter;
 import com.sinyuk.vincent.base.BaseView;
 

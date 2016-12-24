@@ -4,7 +4,6 @@ import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.sinyuk.entities.Photo;
 
 /**
  * Created by sinyuk on 2016/12/22.
