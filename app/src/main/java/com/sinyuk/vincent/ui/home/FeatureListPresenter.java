@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.sinyuk.PhotoFeatureUsecase;
+import com.sinyuk.TimelineUsecase;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     @NonNull
     private final FeatureListContract.View mView;
     @NonNull
-    private final PhotoFeatureUsecase mUsecase;
+    private final TimelineUsecase mUsecase;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not
@@ -32,7 +32,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
     private CompositeSubscription mSubscriptions;
 
     @Inject
-    public FeatureListPresenter(@NonNull PhotoFeatureUsecase usecase,
+    public FeatureListPresenter(@NonNull TimelineUsecase usecase,
                                 @NonNull FeatureListContract.View view) {
         this.mUsecase = usecase;
         this.mView = view;

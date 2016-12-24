@@ -13,7 +13,7 @@ public final class Timeline {
     @SerializedName("hasvisible")
     private boolean hasvisible;
     @SerializedName("previous_cursor")
-    private int previousCursor;
+    private long previousCursor;
     @SerializedName("next_cursor")
     private long nextCursor;
     @SerializedName("total_number")
@@ -39,11 +39,11 @@ public final class Timeline {
         this.hasvisible = hasvisible;
     }
 
-    public int getPreviousCursor() {
+    public long getPreviousCursor() {
         return previousCursor;
     }
 
-    public void setPreviousCursor(int previousCursor) {
+    public void setPreviousCursor(long previousCursor) {
         this.previousCursor = previousCursor;
     }
 

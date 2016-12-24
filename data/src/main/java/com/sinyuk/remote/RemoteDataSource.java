@@ -19,7 +19,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -77,10 +76,8 @@ public final class RemoteDataSource implements RemoteRepository {
 
 
     @Override
-    public Observable<Timeline> friends_timeline(
-            @Query("since_id") String sinceId,
-            @Query("feature") String feature) {
-        return weiboService.friends_timeline(sinceId, feature)
+    public Observable<Timeline> friends_timeline(int page, String feature) {
+        return weiboService.friends_timeline(page, feature)
                 .compose(new ErrorCheckerTransformer<Response<Timeline>, Timeline>());
     }
 }
