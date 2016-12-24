@@ -11,6 +11,8 @@ import com.sinyuk.vincent.base.BaseActivity;
 import com.sinyuk.vincent.databinding.HomeViewBinding;
 import com.sinyuk.vincent.injector.components.DaggerHomeViewComponent;
 import com.sinyuk.vincent.injector.modules.HomeViewModule;
+import com.sinyuk.vincent.ui.timeline.TimelinePresenter;
+import com.sinyuk.vincent.ui.timeline.TimelineView;
 
 import javax.inject.Inject;
 
@@ -23,7 +25,7 @@ public class HomeView extends BaseActivity {
     private HomeViewBinding binding;
 
     @Inject
-    FeatureListPresenter featureListPresenter;
+    TimelinePresenter timelinePresenter;
     private int[] mColors;
 
     @Override
@@ -31,16 +33,16 @@ public class HomeView extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.home_view);
 
-        FeatureList featureList = (FeatureList) getSupportFragmentManager().findFragmentById(R.id.featureList);
+        TimelineView timelineView = (TimelineView) getSupportFragmentManager().findFragmentById(R.id.timeline_fragment);
 
-        if (featureList == null) {
-            featureList = new FeatureList();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), featureList, R.id.featureList);
+        if (timelineView == null) {
+            timelineView = new TimelineView();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), timelineView, R.id.timeline_fragment);
         }
 
         DaggerHomeViewComponent.builder()
                 .appComponent(VincentApplication.get(this).getAppComponent())
-                .homeViewModule(new HomeViewModule(featureList))
+                .homeViewModule(new HomeViewModule(timelineView))
                 .build()
                 .inject(this);
 

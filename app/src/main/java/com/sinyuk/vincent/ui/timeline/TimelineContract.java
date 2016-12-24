@@ -1,4 +1,4 @@
-package com.sinyuk.vincent.ui.home;
+package com.sinyuk.vincent.ui.timeline;
 
 import com.sinyuk.vincent.base.BasePresenter;
 import com.sinyuk.vincent.base.BaseView;

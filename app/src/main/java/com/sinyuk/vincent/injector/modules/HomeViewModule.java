@@ -1,6 +1,6 @@
 package com.sinyuk.vincent.injector.modules;
 
-import com.sinyuk.vincent.ui.home.TimelineContract;
+import com.sinyuk.vincent.ui.timeline.TimelineContract;
 
 import dagger.Module;
 import dagger.Provides;
