@@ -1,7 +1,6 @@
 package com.sinyuk.vincent.ui.timeline;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.sinyuk.GetTimelineUsecase;
 
@@ -13,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by sinyuk on 2016/12/21.
  */
 
-public class TimelinePresenter implements TimelineContract.Presenter, ListCallback {
+public class TimelinePresenter implements TimelineContract.Presenter {
     private static final String TAG = "TimelinePresenter";
     @NonNull
     private final TimelineContract.View mView;
@@ -41,7 +40,6 @@ public class TimelinePresenter implements TimelineContract.Presenter, ListCallba
     @Inject
     void setupListeners() {
         mView.setPresenter(this);
-        mUsecase.setCallback(this);
     }
 
 
@@ -55,38 +53,41 @@ public class TimelinePresenter implements TimelineContract.Presenter, ListCallba
         mSubscriptions.clear();
     }
 
+
     @Override
-    public void startRefreshing() {
-        Log.d(TAG, "startRefreshing: ");
+    public void setFeature(String feature) {
+        mUsecase.setFeature(feature);
     }
 
     @Override
-    public void startLoading() {
-        Log.d(TAG, "startLoading: ");
+    public void refresh() {
+        mSubscriptions.add(mUsecase.fetch(true)
+                .doOnSubscribe(mView::startRefreshing)
+                .doOnTerminate(mView::stopRefreshing)
+                .doOnError(mView::showError)
+                .subscribe(timeline -> {
+                    if (timeline.getTotalNumber() == 0) {
+                        mView.showEmpty();
+                    } else {
+                        mView.setData(timeline.getStatuses());
+                    }
+                }));
     }
 
     @Override
-    public void stopRefreshing() {
-        Log.d(TAG, "stopRefreshing: ");
+    public void loadMore() {
+        mSubscriptions.add(mUsecase.fetch(false)
+                .doOnSubscribe(mView::startLoading)
+                .doOnTerminate(mView::stopLoading)
+                .doOnError(mView::showError)
+                .subscribe(timeline -> {
+                    if (timeline.getMaxId() == timeline.getNextCursor()) {
+                        mView.showNoMore();
+                    } else {
+                        mView.setData(timeline.getStatuses());
+                    }
+                }));
     }
 
-    @Override
-    public void stopLoading() {
-        Log.d(TAG, "stopLoading: ");
-    }
 
-    @Override
-    public void error() {
-        Log.d(TAG, "error: ");
-    }
-
-    @Override
-    public void empty() {
-        Log.d(TAG, "empty: ");
-    }
-
-    @Override
-    public void nomore() {
-        Log.d(TAG, "nomore: ");
-    }
 }

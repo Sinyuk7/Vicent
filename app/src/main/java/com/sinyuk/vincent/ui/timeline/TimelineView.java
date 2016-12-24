@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sinyuk.entities.Status;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;
 import com.sinyuk.vincent.databinding.LayoutStatesBinding;
+
+import java.util.List;
 
 /**
  * Created by sinyuk on 2016/12/21.
@@ -41,6 +44,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+        presenter.refresh();
     }
 
     @Override
@@ -49,4 +53,43 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
         presenter.unsubscribe();
     }
 
+    @Override
+    public void setData(List<Status> photos) {
+
+    }
+
+    @Override
+    public void startRefreshing() {
+
+    }
+
+    @Override
+    public void stopRefreshing() {
+
+    }
+
+    @Override
+    public void startLoading() {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+
+    }
+
+    @Override
+    public void showNoMore() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
 }

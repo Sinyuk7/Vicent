@@ -24,7 +24,7 @@ public class APITest {
     private static void test(RemoteDataSource remoteDataSource) {
         System.out.println("test");
 
-        remoteDataSource.friends_timeline(null, null)
+        remoteDataSource.friends_timeline(1, null)
                 .subscribe(new Observer<Timeline>() {
                     @Override
                     public void onCompleted() {

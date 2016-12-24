@@ -1,5 +1,6 @@
 package com.sinyuk.vincent.injector.modules;
 
+import com.sinyuk.vincent.injector.scopes.FragmentScoped;
 import com.sinyuk.vincent.ui.timeline.TimelineContract;
 
 import dagger.Module;
@@ -22,6 +23,7 @@ public class HomeViewModule {
     }
 
     @Provides
+    @FragmentScoped
     TimelineContract.View featureList() {
         return featureList;
     }

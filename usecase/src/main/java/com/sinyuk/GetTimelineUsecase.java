@@ -1,11 +1,8 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Status;
 import com.sinyuk.entities.Timeline;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,7 +10,6 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by sinyuk on 2016/12/10.
@@ -33,7 +29,7 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
         mSchedulerTransformer = schedulerTransformer;
     }
 
-    public Observable<List<Status>> fetch(final boolean clear) {
+    public Observable<Timeline> fetch(final boolean clear) {
         return buildObservable()
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -47,15 +43,9 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                 .doOnNext(new Action1<Timeline>() {
                     @Override
                     public void call(Timeline timeline) {
-                        if (timeline.getMaxId() != timeline.getNextCursor()) {
+                        if (timeline.getMaxId() > timeline.getNextCursor()) {
                             page++;
                         }
-                    }
-                })
-                .flatMap(new Func1<Timeline, Observable<List<Status>>>() {
-                    @Override
-                    public Observable<List<Status>> call(Timeline timeline) {
-                        return Observable.just(timeline.getStatuses());
                     }
                 });
     }
