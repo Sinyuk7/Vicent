@@ -21,12 +21,12 @@ import java.util.List;
  * Created by sinyuk on 2016/12/21.
  */
 
-public class FeatureList extends BaseFragment implements FeatureListContract.View {
-    private FeatureListContract.Presenter presenter;
+public class FeatureList extends BaseFragment implements TimelineContract.View {
+    private TimelineContract.Presenter presenter;
     private PhotoAdapter photoAdapter;
 
     @Override
-    public void setPresenter(FeatureListContract.Presenter presenter) {
+    public void setPresenter(TimelineContract.Presenter presenter) {
         this.presenter = presenter;
     }
 

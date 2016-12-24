@@ -1,10 +1,9 @@
 package com.sinyuk.vincent.injector.modules;
 
-import com.sinyuk.remote.Endpoint;
-import com.sinyuk.remote.RemoteDataSource;
-import com.sinyuk.remote.RemoteRepository;
+import android.content.SharedPreferences;
+
+import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.sinyuk.utils.SchedulerTransformer;
-import com.sinyuk.vincent.BuildConfig;
 import com.sinyuk.vincent.VincentApplication;
 
 import java.io.File;
@@ -17,8 +16,8 @@ import dagger.Provides;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer;
-import se.akerfeldt.okhttp.signpost.SigningInterceptor;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by sinyuk on 2016/12/20.
@@ -36,31 +35,6 @@ public class AppModule {
     @Singleton
     VincentApplication application() {
         return application;
-    }
-
-    //    Endpoint endpoint, SigningInterceptor signingInterceptor, File path
-    @Provides
-    @Singleton
-    Endpoint endpoint() {
-        return new Endpoint("https://api.500px.com/v1/");
-    }
-
-    @Provides
-    @Singleton
-    SigningInterceptor signingInterceptor() {
-        return new SigningInterceptor(new OkHttpOAuthConsumer(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_SECRET));
-    }
-
-    @Provides
-    @Singleton
-    File cache() {
-        return new File("");
-    }
-
-    @Provides
-    @Singleton
-    RemoteRepository remoteDataSource(Endpoint endpoint, SigningInterceptor signingInterceptor, File path) {
-        return new RemoteDataSource(endpoint, signingInterceptor, path);
     }
 
     @Provides
@@ -92,5 +66,24 @@ public class AppModule {
     SchedulerTransformer io_main(@Named("io") Scheduler io, @Named("main") Scheduler main) {
         return new SchedulerTransformer(io, main);
     }
+
+    @Provides
+    @Singleton
+    SharedPreferences sharedPreferences() {
+        return application.getSharedPreferences("Vincent", MODE_PRIVATE);
+    }
+
+    @Provides
+    @Singleton
+    RxSharedPreferences rxSharedPreferences(SharedPreferences preferences) {
+        return RxSharedPreferences.create(preferences);
+    }
+
+    @Provides
+    @Singleton
+    File cache() {
+        return new File(application.getExternalCacheDir(), "cache");
+    }
+
 
 }

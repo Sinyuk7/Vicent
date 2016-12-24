@@ -17,10 +17,10 @@ import rx.subscriptions.CompositeSubscription;
  * Created by sinyuk on 2016/12/21.
  */
 
-public class FeatureListPresenter implements FeatureListContract.Presenter {
+public class FeatureListPresenter implements TimelineContract.Presenter {
     private static final String TAG = "FeatureListPresenter";
     @NonNull
-    private final FeatureListContract.View mView;
+    private final TimelineContract.View mView;
     @NonNull
     private final TimelineUsecase mUsecase;
 
@@ -33,7 +33,7 @@ public class FeatureListPresenter implements FeatureListContract.Presenter {
 
     @Inject
     public FeatureListPresenter(@NonNull TimelineUsecase usecase,
-                                @NonNull FeatureListContract.View view) {
+                                @NonNull TimelineContract.View view) {
         this.mUsecase = usecase;
         this.mView = view;
 

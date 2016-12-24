@@ -4,7 +4,9 @@ import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
 import com.sinyuk.vincent.VincentApplication;
+import com.sinyuk.vincent.injector.modules.ApiModule;
 import com.sinyuk.vincent.injector.modules.AppModule;
+import com.sinyuk.vincent.injector.modules.OauthModule;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -41,4 +43,8 @@ public interface AppComponent {
     @Named("io_main")
     SchedulerTransformer io_main();
 
+
+    ApiComponent plus(ApiModule module);
+
+    OauthComponent plus(OauthModule module);
 }

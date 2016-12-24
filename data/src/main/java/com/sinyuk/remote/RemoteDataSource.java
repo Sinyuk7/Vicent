@@ -33,12 +33,12 @@ public final class RemoteDataSource implements RemoteRepository {
 
     @Inject
     public RemoteDataSource(@Named("api") Endpoint endpoint,
-                            @Named("token") String token,
+                            @Named("token") String accessToken,
                             File path) {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        builder.addInterceptor(new OauthInterceptor(token));
+        builder.addInterceptor(new OauthInterceptor(accessToken));
 
         if (path != null) {
             final Cache cache = new Cache(path, MAX_CACHE);

@@ -1,6 +1,6 @@
 package com.sinyuk.vincent.injector.modules;
 
-import com.sinyuk.vincent.ui.home.FeatureListContract;
+import com.sinyuk.vincent.ui.home.TimelineContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,14 +15,14 @@ import dagger.Provides;
  */
 @Module
 public class HomeViewModule {
-    private final FeatureListContract.View featureList;
+    private final TimelineContract.View featureList;
 
-    public HomeViewModule(FeatureListContract.View featureList) {
+    public HomeViewModule(TimelineContract.View featureList) {
         this.featureList = featureList;
     }
 
     @Provides
-    FeatureListContract.View featureList() {
+    TimelineContract.View featureList() {
         return featureList;
     }
 
