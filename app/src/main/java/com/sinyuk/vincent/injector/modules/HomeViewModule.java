@@ -16,16 +16,16 @@ import dagger.Provides;
  */
 @Module
 public class HomeViewModule {
-    private final TimelineContract.View featureList;
+    private final TimelineContract.View timelineView;
 
-    public HomeViewModule(TimelineContract.View featureList) {
-        this.featureList = featureList;
+    public HomeViewModule(TimelineContract.View timelineView) {
+        this.timelineView = timelineView;
     }
 
     @Provides
     @FragmentScoped
-    TimelineContract.View featureList() {
-        return featureList;
+    TimelineContract.View timelineView() {
+        return timelineView;
     }
 
 

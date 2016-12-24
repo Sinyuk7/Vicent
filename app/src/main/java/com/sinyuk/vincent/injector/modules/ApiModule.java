@@ -2,6 +2,7 @@ package com.sinyuk.vincent.injector.modules;
 
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 import com.sinyuk.remote.Endpoint;
+import com.sinyuk.remote.OauthManager;
 import com.sinyuk.remote.RemoteDataSource;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.vincent.Prefs;
@@ -30,7 +31,7 @@ public class ApiModule {
     @Provides
     @Singleton
     @Named("api")
-    Endpoint endpoint() {
+    Endpoint api() {
         return new Endpoint("https://api.weibo.com/2/");
     }
 
@@ -39,5 +40,18 @@ public class ApiModule {
     @Singleton
     RemoteRepository remoteDataSource(Endpoint endpoint, @Named("token") String accessToken, File path) {
         return new RemoteDataSource(endpoint, accessToken, path);
+    }
+
+    @Provides
+    @Singleton
+    @Named("oauth")
+    Endpoint oauth() {
+        return new Endpoint("https://api.weibo.com/oauth2/");
+    }
+
+    @Provides
+    @Singleton
+    OauthManager oauthManager(@Named("oauth") Endpoint endpoint) {
+        return new OauthManager(endpoint);
     }
 }
