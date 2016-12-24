@@ -17,7 +17,6 @@ import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.databinding.ItemStatusBinding;
 import com.sinyuk.vincent.utils.rv.BaseRvAdapter;
 import com.sinyuk.vincent.utils.rv.BindingViewHolder;
-import com.sinyuk.vincent.utils.rv.GridSpacingItemDecoration;
 import com.sinyuk.vincent.viewmodels.StatusModel;
 import com.sinyuk.vincent.widgets.SquareImageView;
 
@@ -33,11 +32,13 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     private final int spacing;
     private final int screenWidth;
     private final int thirdW;
+    private final int halfW;
 
     public TimelineAdapter(Context context) {
         spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
         screenWidth = ScreenUtils.getScreenWidth(context);
-        thirdW = (screenWidth - 2 * spacing) / 3;
+        thirdW = (screenWidth) / 3;
+        halfW = (screenWidth) / 2;
     }
 
     @Override
@@ -59,32 +60,27 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
         holder.getBinding().setVariable(BR.data, data);
 
-        if (data.getPicUrls() != null) {
+        if (data.getPicUrls() != null && !data.getPicUrls().isEmpty()) {
             int spanCount = 1;
             switch (data.getPicUrls().size()) {
                 case 1:
                     spanCount = 1;
                     break;
-                case 7:
-                    spanCount = 7;
-                    break;
-                case 5:
-                    spanCount = 5;
-                    break;
-                case 4:
                 case 2:
-                case 6:
                 case 8:
+                case 4:
                     spanCount = 2;
                     break;
-                case 9:
+                case 5:
+                case 7:
                 case 3:
+                case 9:
+                case 6:
                     spanCount = 3;
                     break;
 
             }
-            int finalSpanCount = spanCount;
-            final GridLayoutManager layoutManager = new GridLayoutManager(holder.getBinding().getRoot().getContext(), finalSpanCount) {
+            final GridLayoutManager layoutManager = new GridLayoutManager(holder.getBinding().getRoot().getContext(), spanCount) {
                 @Override
                 public boolean canScrollVertically() {
                     return false;
@@ -92,17 +88,16 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
                 @Override
                 public boolean canScrollHorizontally() {
-                    return finalSpanCount == 7 || finalSpanCount == 5;
+                    return false;
                 }
             };
             layoutManager.setAutoMeasureEnabled(true);
 
             ((ItemStatusBinding) holder.getBinding()).gridView.setLayoutManager(layoutManager);
-            ((ItemStatusBinding) holder.getBinding()).gridView.addItemDecoration(new GridSpacingItemDecoration(finalSpanCount, spacing, false));
 
             ((ItemStatusBinding) holder.getBinding()).gridView.setHasFixedSize(true);
 
-            ((ItemStatusBinding) holder.getBinding()).gridView.setAdapter(new PhotoCellAdapter(data.getPicUrls(), spanCount));
+            ((ItemStatusBinding) holder.getBinding()).gridView.setAdapter(new PhotoCellAdapter(data.getPicUrls()));
         }
 
 
@@ -111,12 +106,10 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
     private class PhotoCellAdapter extends RecyclerView.Adapter<PhotoCellAdapter.PhotoCell> {
 
-        private final int spanCount;
         private List<Status.PicUrls> picUrls = new ArrayList<>();
 
-        PhotoCellAdapter(List<Status.PicUrls> picUrls, int spanCount) {
+        PhotoCellAdapter(List<Status.PicUrls> picUrls) {
             this.picUrls = picUrls;
-            this.spanCount = spanCount;
         }
 
         @Override
@@ -131,7 +124,7 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
             Glide.with(holder.imageView.getContext())
                     .load(StatusModel.getPicUrl(
                             picUrls.get(position).getThumbnailPic(),
-                            spanCount))
+                            picUrls.size()))
                     .crossFade(300)
                     .into(holder.imageView);
         }
@@ -149,9 +142,6 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
             PhotoCell(View itemView) {
                 super(itemView);
                 imageView = (SquareImageView) itemView.findViewById(R.id.photo);
-                if (spanCount == 7 || spanCount == 5 || spanCount == 3) {
-                    imageView.setMaxWidth(thirdW);
-                }
 
                 imageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override

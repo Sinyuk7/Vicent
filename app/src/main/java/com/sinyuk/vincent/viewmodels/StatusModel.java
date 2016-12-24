@@ -27,16 +27,10 @@ public class StatusModel {
     }
 
     public static String getPicUrl(String thumbnailPic, int spanCount) {
-        String type = "thumbnail";
+        String type = "bmiddle";
         switch (spanCount) {
             case 1:
                 type = "large";
-                break;
-            case 2:
-                type = "bmiddle";
-                break;
-            case 3:
-                type = "bmiddle";
                 break;
         }
         if (thumbnailPic.contains("thumbnail")) {
