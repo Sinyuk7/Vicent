@@ -26,7 +26,6 @@ public interface WeiboService {
     @GET("statuses/user_timeline.json?trim_user=1")
     Observable<Response<Timeline>> user_timeline(
             @Query("uid") long uid,
-            @Query("screen_name") String screen_name,
             @Query("page") int page,
             @Query("feature") int feature);
 

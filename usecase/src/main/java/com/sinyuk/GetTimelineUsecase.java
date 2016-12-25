@@ -64,10 +64,44 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
         return feature;
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public String getTimelineType() {
+        return timeline_type;
+    }
+
+    public void setTimelineType(String timeline_type) {
+        this.timeline_type = timeline_type;
+    }
 
     @Override
     protected Observable<Timeline> buildObservable() {
-        return mRepository.friends_timeline(page, feature)
-                .compose(mSchedulerTransformer);
+        switch (timeline_type) {
+            case "home":
+                return mRepository.home_timeline(page, feature)
+                        .compose(mSchedulerTransformer);
+            case "friends":
+                return mRepository.friends_timeline(page, feature)
+                        .compose(mSchedulerTransformer);
+            case "public":
+                return mRepository.public_timeline(page)
+                        .compose(mSchedulerTransformer);
+            case "user":
+                return mRepository.user_timeline(uid, page, feature)
+                        .compose(mSchedulerTransformer);
+            default:
+                return Observable.error(new Throwable("timeline type can't be null!"));
+        }
+
     }
 }
