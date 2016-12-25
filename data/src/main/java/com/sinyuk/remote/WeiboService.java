@@ -23,7 +23,7 @@ public interface WeiboService {
 
     //    statuses/user_timeline
     //    获取某个用户最新发表的微博列表
-    @GET("statuses/user_timeline.json?trim_user=1")
+    @GET("statuses/user_timeline.json")
     Observable<Response<Timeline>> user_timeline(
             @Query("uid") long uid,
             @Query("page") int page,
