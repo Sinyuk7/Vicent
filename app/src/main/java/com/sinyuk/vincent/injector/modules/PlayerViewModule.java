@@ -1,8 +1,11 @@
 package com.sinyuk.vincent.injector.modules;
 
-import com.android.annotations.Nullable;
+import android.support.annotation.Nullable;
+
 import com.sinyuk.vincent.injector.scopes.ActivityScope;
 import com.sinyuk.vincent.ui.timeline.TimelineContract;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Named;
 
@@ -18,14 +21,18 @@ public class PlayerViewModule {
     @Nullable
     @Named("uid")
     private final long uid;
-    @Nullable
-    @Named("screen_name")
-    private final String screenName;
+    @Named("timeline_type")
+    @NotNull
+    private final String timeline_type;
 
-    public PlayerViewModule(TimelineContract.View timelineView, long uid, String screenName) {
+
+    public PlayerViewModule(TimelineContract.View timelineView,
+                            @NotNull String timeline_type,
+                            long uid) {
         this.timelineView = timelineView;
         this.uid = uid;
-        this.screenName = screenName;
+        this.timeline_type = timeline_type;
+
     }
 
     @Provides
@@ -44,9 +51,9 @@ public class PlayerViewModule {
 
 
     @Provides
+    @Named("timeline_type")
     @ActivityScope
-    @Named("screen_name")
-    String screenName() {
-        return screenName;
+    String timeline_type() {
+        return timeline_type;
     }
 }

@@ -6,6 +6,14 @@
     <data>
 
         <variable
+            name="position"
+            type="Integer"/>
+
+        <variable
+            name="presenter"
+            type="com.sinyuk.vincent.ui.timeline.TimelineAdapter"/>
+
+        <variable
             name="data"
             type="com.sinyuk.entities.Status"/>
 
@@ -36,6 +44,7 @@
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/avatar"
                     style="@style/status_avatar"
+                    android:onClick="@{(view) -> presenter.onClickAvatar(view, data.user.id,position)}"
                     app:status_avatar="@{data.user.avatarHd}"
                     tools:src="@mipmap/ic_launcher"/>
 
@@ -100,6 +109,7 @@
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         style="@style/status_avatar.small"
+                        android:onClick="@{(view) -> presenter.onClickAvatar(view, data.retweetedStatus.user.id,position)}"
                         app:status_avatar="@{data.retweetedStatus.user.avatarHd}"
                         tools:src="@mipmap/ic_launcher"/>
 
@@ -126,12 +136,12 @@
                         android:background="@color/block_quote"/>
 
                     <TextView
-                        android:textSize="@dimen/text_primary_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_space_8"
                         android:text="@{data.retweetedStatus.text}"
                         android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_primary_2"
                         tools:text="dsafddsfas\ndfadsf\nds\nafd\nsafsdafsd"/>
                 </LinearLayout>
             </LinearLayout>

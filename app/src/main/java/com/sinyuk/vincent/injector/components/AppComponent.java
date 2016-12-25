@@ -3,6 +3,7 @@ package com.sinyuk.vincent.injector.components;
 import com.sinyuk.vincent.injector.modules.ApiModule;
 import com.sinyuk.vincent.injector.modules.AppModule;
 import com.sinyuk.vincent.injector.modules.HomeViewModule;
+import com.sinyuk.vincent.injector.modules.PlayerViewModule;
 
 import javax.inject.Singleton;
 
@@ -34,4 +35,6 @@ public interface AppComponent {
 //
 //    File cache();
     HomeViewComponent plus(HomeViewModule module);
+
+    PlayerViewComponent plus(PlayerViewModule module);
 }

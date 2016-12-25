@@ -5,58 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public final class User {
 
 
-    /**
-     * id : 5984691065
-     * idstr : 5984691065
-     * class : 1
-     * screen_name : 波杰克马男
-     * name : 波杰克马男
-     * province : 400
-     * city : 45
-     * location : 海外 沙特阿拉伯
-     * description : 我不想做人了
-     * url :
-     * profile_image_url : http://tva2.sinaimg.cn/crop.14.0.721.721.50/006x19xfjw8f9c98h7e4jj30ku0k175i.jpg
-     * cover_image_phone : http://ww4.sinaimg.cn/crop.0.0.640.640.640/006x19xfgw1f99baf2tvpj30ku0kuwev.jpg
-     * profile_url : u/5984691065
-     * domain :
-     * weihao :
-     * gender : m
-     * followers_count : 2120581
-     * friends_count : 51
-     * pagefriends_count : 0
-     * statuses_count : 1189
-     * favourites_count : 1
-     * created_at : Mon Jul 18 16:36:56 +0800 2016
-     * following : true
-     * allow_all_act_msg : false
-     * geo_enabled : true
-     * verified : false
-     * verified_type : -1
-     * remark :
-     * ptype : 0
-     * allow_all_comment : true
-     * avatar_large : http://tva2.sinaimg.cn/crop.14.0.721.721.180/006x19xfjw8f9c98h7e4jj30ku0k175i.jpg
-     * avatar_hd : http://tva2.sinaimg.cn/crop.14.0.721.721.1024/006x19xfjw8f9c98h7e4jj30ku0k175i.jpg
-     * verified_reason :
-     * verified_trade :
-     * verified_reason_url :
-     * verified_source :
-     * verified_source_url :
-     * follow_me : false
-     * online_status : 0
-     * bi_followers_count : 10
-     * lang : zh-cn
-     * star : 0
-     * mbtype : 12
-     * mbrank : 3
-     * block_word : 0
-     * block_app : 1
-     * credit_score : 80
-     * user_ability : 516
-     * urank : 9
-     */
-
     @SerializedName("id")
     private long id;
     @SerializedName("idstr")

@@ -34,6 +34,7 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     private final int thirdW;
     private final int halfW;
 
+
     public TimelineAdapter(Context context) {
         spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
         screenWidth = ScreenUtils.getScreenWidth(context);
@@ -59,6 +60,10 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
         final Status data = mDataSet.get(itemPositionInData);
 
         holder.getBinding().setVariable(BR.data, data);
+
+        holder.getBinding().setVariable(BR.presenter, this);
+
+        holder.getBinding().setVariable(BR.position, itemPositionInData);
 
         if (data.getPicUrls() != null && !data.getPicUrls().isEmpty()) {
             int spanCount = 1;
@@ -102,6 +107,11 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
 
         holder.getBinding().executePendingBindings();
+    }
+
+
+    public void onClickAvatar(View view, long uid, int position) {
+
     }
 
     private class PhotoCellAdapter extends RecyclerView.Adapter<PhotoCellAdapter.PhotoCell> {

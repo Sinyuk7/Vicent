@@ -33,6 +33,8 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                        @Named("uid") long uid) {
         mRepository = repository;
         mSchedulerTransformer = schedulerTransformer;
+        this.uid = uid;
+        this.timeline_type = timeline_type;
     }
 
     public Observable<Timeline> fetch(final boolean clear) {
