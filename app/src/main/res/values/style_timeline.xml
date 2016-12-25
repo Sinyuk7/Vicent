@@ -20,6 +20,12 @@
         <item name="android:layout_height">@dimen/status_avatar_small</item>
     </style>
 
+    <style name="status_actions">
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+    </style>
 
     <dimen name="status_avatar">36dp</dimen>
     <dimen name="status_avatar_small">24dp</dimen>

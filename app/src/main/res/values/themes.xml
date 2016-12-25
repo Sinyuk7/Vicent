@@ -7,10 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_primary</item>
+        <item name="android:windowBackground">@color/windowbackground</item>
     </style>
 
-    <dimen name="text_primary">14sp</dimen>
-    <dimen name="text_secondary">12sp</dimen>
-    <dimen name="text_caption">10sp</dimen>
+
     <color name="cardview_background">#ffffff</color>
 </resources>

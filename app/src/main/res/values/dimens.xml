@@ -1,6 +1,6 @@
 <resources>
 
-    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_elevation">0.2dp</dimen>
     <dimen name="card_radius">0dp</dimen>
     <dimen name="content_space_16">16dp</dimen>
     <dimen name="content_space_4">4dp</dimen>
@@ -8,4 +8,10 @@
 
 
     <dimen name="photo_cell_spacing">2dp</dimen>
+    <dimen name="content_space_12">12dp</dimen>
+    <dimen name="text_primary_2">13sp</dimen>
+
+    <dimen name="text_primary">14sp</dimen>
+    <dimen name="text_secondary">11sp</dimen>
+    <dimen name="text_caption">10sp</dimen>
 </resources>

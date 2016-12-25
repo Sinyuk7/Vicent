@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sinyuk.entities.Status;
+import com.sinyuk.myutils.ConvertUtils;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;
 import com.sinyuk.vincent.databinding.LayoutStatesBinding;
+import com.sinyuk.vincent.utils.rv.GridSpacingItemDecoration;
 
 import java.util.List;
 
@@ -51,6 +53,8 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setHasFixedSize(true);
+
+        binding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, ConvertUtils.dp2px(getContext(), 16), false));
 
         adapter = new TimelineAdapter(getContext());
         adapter.setHasStableIds(true);

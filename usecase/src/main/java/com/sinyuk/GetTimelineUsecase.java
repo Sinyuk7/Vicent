@@ -19,7 +19,7 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
 
     private final RemoteRepository mRepository;
     private final SchedulerTransformer<Timeline> mSchedulerTransformer;
-    private int feature = 2;
+    private int feature = 0;
     private int page = 1;
 
     @Inject
