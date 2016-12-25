@@ -21,10 +21,16 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
     private final SchedulerTransformer<Timeline> mSchedulerTransformer;
     private int feature = 0;
     private int page = 1;
+    @Named("uid")
+    private long uid;
+    @Named("timeline_type")
+    private String timeline_type;
 
     @Inject
     GetTimelineUsecase(RemoteRepository repository,
-                       @Named("io_main") SchedulerTransformer schedulerTransformer) {
+                       @Named("io_main") SchedulerTransformer schedulerTransformer,
+                       @Named("timeline_type") String timeline_type,
+                       @Named("uid") long uid) {
         mRepository = repository;
         mSchedulerTransformer = schedulerTransformer;
     }

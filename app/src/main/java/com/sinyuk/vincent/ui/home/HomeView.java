@@ -39,7 +39,8 @@ public class HomeView extends BaseActivity {
         }
 
         VincentApplication.get(this).getAppComponent()
-                .plus(new HomeViewModule(timelineView)).inject(this);
+                .plus(new HomeViewModule(timelineView, "home", 0))
+                .inject(this);
 
     }
 }

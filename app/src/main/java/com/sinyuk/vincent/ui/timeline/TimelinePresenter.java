@@ -26,10 +26,11 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     private CompositeSubscription mSubscriptions;
 
     @Inject
-    public TimelinePresenter(@NonNull GetTimelineUsecase usecase,
-                             @NonNull TimelineContract.View view) {
-        this.mUsecase = usecase;
-        this.mView = view;
+    public TimelinePresenter(
+            @NonNull TimelineContract.View mView,
+            @NonNull GetTimelineUsecase mUsecase) {
+        this.mView = mView;
+        this.mUsecase = mUsecase;
     }
 
     /**

@@ -29,4 +29,18 @@ public interface WeiboService {
             @Query("screen_name") String screen_name,
             @Query("page") int page,
             @Query("feature") int feature);
+
+//    statuses/home_timeline
+//    获取当前登录用户及其所关注（授权）用户的最新微博
+
+    @GET("statuses/home_timeline.json")
+    Observable<Response<Timeline>> home_timeline(
+            @Query("page") int page,
+            @Query("feature") int feature);
+
+    //    statuses/public_timeline
+    //            返回最新的公共微博
+    @GET("statuses/public_timeline.json")
+    Observable<Response<Timeline>> public_timeline(
+            @Query("page") int page);
 }
