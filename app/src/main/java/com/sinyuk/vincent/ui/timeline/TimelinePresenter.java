@@ -40,7 +40,6 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     @Inject
     void setupListeners() {
         mView.setPresenter(this);
-
     }
 
 
