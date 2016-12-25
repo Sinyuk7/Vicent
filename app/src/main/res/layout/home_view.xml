@@ -6,22 +6,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/timeline_fragment"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:elevation="0dp">
 
-            <android.support.v7.widget.Toolbar
+            <com.sinyuk.vincent.widgets.NavLayout
+                android:id="@+id/navLayout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="@string/app_name"/>
+                android:layout_height="?actionBarSize"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="?actionBarSize"
+                android:paddingRight="?actionBarSize">
+
+                <ImageView
+                    android:id="@+id/icon1"
+                    style="@style/nav_icon"
+                    android:src="@drawable/ic_home_shape"/>
+
+                <android.support.v4.widget.Space
+                    style="@style/nav_space"/>
+
+                <ImageView
+                    android:id="@+id/icon2"
+                    style="@style/nav_icon"
+                    android:padding="1dp"
+                    android:src="@drawable/ic_search"/>
+
+                <android.support.v4.widget.Space
+                    style="@style/nav_space"/>
+
+                <ImageView
+                    android:id="@+id/icon3"
+                    style="@style/nav_icon"
+                    android:src="@drawable/ic_message_fill"/>
+
+                <android.support.v4.widget.Space
+                    style="@style/nav_space"/>
+
+                <ImageView
+                    android:id="@+id/icon4"
+                    style="@style/nav_icon"
+                    android:src="@drawable/ic_my_shape"/>
+
+
+            </com.sinyuk.vincent.widgets.NavLayout>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -46,9 +46,8 @@ dependencies {
     compile cfg.dependencies["eventbus"]
     apt cfg.dependencies["dagger-compiler"]
     compile project(':usecase')
-    compile 'com.github.80998062:MyUtils:2.0.1'
     // layout manager
+    compile 'com.github.80998062:MyUtils:2.0.1'
     compile 'com.fivehundredpx:greedo-layout:1.0.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
-    compile project(':bottomnav')
 }

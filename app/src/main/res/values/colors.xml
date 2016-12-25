@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#333</color>
-    <color name="colorPrimaryDark">#333</color>
-    <color name="colorAccent">#333</color>
+    <color name="colorPrimary">#007cb6</color>
+    <color name="colorPrimaryDark">#015e94</color>
+    <color name="colorAccent">#0eadf7</color>
     <color name="text_secondary">#9e9e9e</color>
     <color name="text_primary">#333</color>
-    <color name="windowbackground">#9e9e9e</color>
+    <color name="windowbackground">#007cb6</color>
     <color name="block_quote">#bdeeeeee</color>
+    <color name="white_75pt">#a0ffffff</color>
 </resources>

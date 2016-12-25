@@ -1,6 +1,7 @@
 package com.sinyuk.remote;
 
 import com.sinyuk.entities.Timeline;
+import com.sinyuk.entities.User;
 
 import retrofit2.Response;
 import retrofit2.http.GET;
@@ -42,4 +43,11 @@ public interface WeiboService {
     @GET("statuses/public_timeline.json")
     Observable<Response<Timeline>> public_timeline(
             @Query("page") int page);
+
+    //    users/show
+    //    根据用户ID获取用户信息
+
+    @GET("statuses/users/show.json")
+    Observable<Response<User>> users_show(
+            @Query("uid") long uid);
 }
