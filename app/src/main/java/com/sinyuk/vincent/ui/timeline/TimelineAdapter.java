@@ -15,6 +15,7 @@ import com.sinyuk.myutils.system.ScreenUtils;
 import com.sinyuk.vincent.BR;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.databinding.ItemStatusBinding;
+import com.sinyuk.vincent.ui.player.PlayerView;
 import com.sinyuk.vincent.utils.rv.BaseRvAdapter;
 import com.sinyuk.vincent.utils.rv.BindingViewHolder;
 import com.sinyuk.vincent.viewmodels.StatusModel;
@@ -111,7 +112,7 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
 
     public void onClickAvatar(View view, long uid, int position) {
-
+        PlayerView.start(view.getContext(), uid);
     }
 
     private class PhotoCellAdapter extends RecyclerView.Adapter<PhotoCellAdapter.PhotoCell> {
