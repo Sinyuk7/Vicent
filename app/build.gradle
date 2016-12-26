@@ -7,6 +7,16 @@ def cfg = rootProject.ext;
 android {
     compileSdkVersion cfg.compileSdkVersion
     buildToolsVersion cfg.buildToolsVersion
+
+    signingConfigs {
+        release {
+            storeFile file("/Users/sinyuk/repo/keystore/vincent.jks")
+            storePassword "vincent"
+            keyAlias "vincent-beta"
+            keyPassword "vincent"
+        }
+    }
+
     defaultConfig {
         applicationId cfg.applicationId
         minSdkVersion cfg.minSdkVersion
@@ -16,38 +26,67 @@ android {
         buildConfigField "String", "CONSUMER_KEY", "\"${cfg.consumer_key}\""
         buildConfigField "String", "CONSUMER_SECRET", "\"${cfg.consumer_secret}\""
         buildConfigField "String", "VERSION", "\"${cfg.versionName}\""
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
+        signingConfig signingConfigs.release
+
+        resConfigs "cn"
+
+        splits {
+            density {
+                enable true
+                include "xhdpi", "xxhdpi", "xxxhdpi"
+                compatibleScreens 'large', 'xlarge'
+            }
+        }
+        buildTypes {
+            release {
+                shrinkResources true
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.release
+                debuggable false
+
+            }
+
+            debug {
+                signingConfig signingConfigs.release
+                debuggable true
+            }
+        }
+
+        dataBinding {
+            enabled = true
+        }
+
+        compileOptions {
+            targetCompatibility 1.8
+            sourceCompatibility 1.8
+        }
+
+        lintOptions {
+//        checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
         }
     }
 
-    dataBinding {
-        enabled = true
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        compile cfg.dependencies["support-design"]
+        compile cfg.dependencies["appcompat-v7"]
+        compile cfg.dependencies["cardView"]
+        compile cfg.dependencies["recyclerView"]
+        compile cfg.dependencies["glide"]
+        compile cfg.dependencies["rxandroid"]
+        compile cfg.dependencies["rx-preferences"]
+        compile cfg.dependencies["eventbus"]
+        apt cfg.dependencies["dagger-compiler"]
+        compile project(':usecase')
+        // layout manager
+        compile 'com.github.80998062:MyUtils:2.0.1'
+        compile 'com.fivehundredpx:greedo-layout:1.0.0'
+        compile 'com.makeramen:roundedimageview:2.3.0'
     }
-
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
-}
-
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile cfg.dependencies["support-design"]
-    compile cfg.dependencies["appcompat-v7"]
-    compile cfg.dependencies["cardView"]
-    compile cfg.dependencies["recyclerView"]
-    compile cfg.dependencies["glide"]
-    compile cfg.dependencies["rxandroid"]
-    compile cfg.dependencies["rx-preferences"]
-    compile cfg.dependencies["eventbus"]
-    apt cfg.dependencies["dagger-compiler"]
-    compile project(':usecase')
-    // layout manager
-    compile 'com.github.80998062:MyUtils:2.0.1'
-    compile 'com.fivehundredpx:greedo-layout:1.0.0'
-    compile 'com.makeramen:roundedimageview:2.3.0'
 }
