@@ -8,4 +8,11 @@
     <color name="windowbackground">#007cb6</color>
     <color name="block_quote">#bdeeeeee</color>
     <color name="white_75pt">#a0ffffff</color>
+
+
+    <array name="progress_colors">
+        <item>#fd9d0c</item>
+        <item>#b827f5</item>
+        <item>#b827f5</item>
+    </array>
 </resources>

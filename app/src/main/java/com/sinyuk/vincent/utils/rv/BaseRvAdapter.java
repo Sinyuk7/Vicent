@@ -43,11 +43,11 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BindingViewH
         return hasFooter() && position == getDataItemCount() + (hasHeader() ? 1 : 0);
     }
 
-    protected int itemPositionInData(int rvPosition) {
+    private int itemPositionInData(int rvPosition) {
         return rvPosition - (hasHeader() ? 1 : 0);
     }
 
-    protected int itemPositionInRV(int dataPosition) {
+    private int itemPositionInRV(int dataPosition) {
         return dataPosition + (hasHeader() ? 1 : 0);
     }
 
@@ -135,21 +135,17 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BindingViewH
         }
     }
 
+    @Override
+    public void onBindViewHolder(BindingViewHolder holder, int position, List<Object> payloads) {
+        if (!isHeader(position) && !isFooter(position)) {
+            onBindMyItemViewHolder(holder, itemPositionInData(position), payloads);
+        }
+    }
+
+    protected abstract void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData, List<Object> payloads);
+
     protected abstract void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData);
 
-
-//    @Override
-//    public void onBindViewHolder(BindingViewHolder holder, int position, List<Object> payloads) {
-//        if (!isHeader(position) && !isFooter(position)) {
-//            onBindMyItemViewHolder(holder, itemPositionInData(position), payloads);
-//        }
-//    }
-//
-//    protected abstract void onBindMyItemViewHolder(BindingViewHolder holder, int i, List<Object> payloads);
-
-    protected void notifyMyItemChanged(int position){
-
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -177,26 +173,20 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BindingViewH
     }
 
 
-    public void setData(List<T> data) {
+    public void setData(List<T> data, boolean clear) {
 
-        if (mDataSet.isEmpty()) {
+        if (!clear) {
+            final int start = mDataSet.size();
             mDataSet.addAll(data);
-            notifyItemRangeInserted(itemPositionInRV(0), data.size());
+            notifyItemRangeInserted(itemPositionInRV(start), data.size());
         } else {
             final int previousContentSize = mDataSet.size();
             mDataSet.clear();
             mDataSet.addAll(data);
             notifyItemRangeRemoved(itemPositionInRV(0), previousContentSize);
             notifyItemRangeInserted(itemPositionInRV(0), data.size());
-//            notifyDataSetChanged();
         }
     }
 
-
-    public void appendData(List<T> data) {
-        final int start = mDataSet.size();
-        mDataSet.addAll(data);
-        notifyItemRangeInserted(itemPositionInRV(start), data.size());
-    }
 
 }

@@ -3,6 +3,10 @@ package com.sinyuk.vincent.ui.timeline;
 import android.support.annotation.NonNull;
 
 import com.sinyuk.GetTimelineUsecase;
+import com.sinyuk.entities.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,6 +23,9 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     @NonNull
     private final GetTimelineUsecase mUsecase;
 
+    private boolean dataInTransit = false;
+
+    private List<Status> statusList = new ArrayList<>();
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not
      * injected with {@code @Nullable} values.
@@ -31,6 +38,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
             @NonNull GetTimelineUsecase mUsecase) {
         this.mView = mView;
         this.mUsecase = mUsecase;
+        mSubscriptions = new CompositeSubscription();
     }
 
     /**
@@ -46,7 +54,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void subscribe() {
-        mSubscriptions = new CompositeSubscription();
+
     }
 
     @Override
@@ -62,34 +70,41 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void refresh() {
+        if (dataInTransit) return;
+
         mSubscriptions.add(mUsecase.fetch(true)
+                .doOnSubscribe(() -> dataInTransit = true)
                 .doOnSubscribe(mView::startRefreshing)
+                .doOnSubscribe(() -> statusList.clear())
+                .doOnTerminate(() -> dataInTransit = false)
                 .doOnTerminate(mView::stopRefreshing)
                 .doOnError(mView::showError)
                 .subscribe(timeline -> {
                     if (timeline.getTotalNumber() == 0) {
                         mView.showEmpty();
                     } else {
-                        mView.setData(timeline.getStatuses());
+                        mView.setData(timeline.getStatuses(), true);
                     }
                 }));
     }
 
     @Override
     public void loadMore() {
+        if (dataInTransit) return;
         mSubscriptions.add(mUsecase.fetch(false)
+                .doOnSubscribe(() -> dataInTransit = true)
+                .doOnTerminate(() -> dataInTransit = false)
                 .doOnSubscribe(mView::startLoading)
                 .doOnTerminate(mView::stopLoading)
                 .doOnError(mView::showError)
                 .subscribe(timeline -> {
-                    if (timeline.getMaxId() == timeline.getNextCursor()) {
+                    if (timeline.getNextCursor() == 0) {
                         mView.showNoMore();
                     } else {
-                        mView.setData(timeline.getStatuses());
+                        mView.setData(timeline.getStatuses(), false);
                     }
                 }));
     }
-
 
 
 }

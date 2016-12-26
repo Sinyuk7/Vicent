@@ -176,12 +176,12 @@
 
                 <ImageView
                     style="@style/status_actions"
-                    android:layout_marginRight="@dimen/content_space_8"
+                    android:layout_marginRight="@dimen/content_space_16"
                     android:src="@drawable/ic_share"/>
 
                 <ImageView
                     style="@style/status_actions"
-                    android:layout_marginRight="@dimen/content_space_8"
+                    android:layout_marginRight="@dimen/content_space_16"
                     android:src="@drawable/ic_information"/>
 
                 <ImageView

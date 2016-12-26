@@ -57,6 +57,15 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     }
 
     @Override
+    protected void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData, List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindMyItemViewHolder(holder, itemPositionInData);
+        } else {
+
+        }
+    }
+
+    @Override
     protected void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData) {
         final Status data = mDataSet.get(itemPositionInData);
 

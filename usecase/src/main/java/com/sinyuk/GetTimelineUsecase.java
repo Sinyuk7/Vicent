@@ -44,15 +44,14 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                     public void call() {
                         if (clear) {
                             page = 1;
-
                         }
                     }
                 })
                 .doOnNext(new Action1<Timeline>() {
                     @Override
                     public void call(Timeline timeline) {
-                        if (timeline.getMaxId() > timeline.getNextCursor()) {
-                            page++;
+                        if (0 != timeline.getNextCursor()) {
+                            ++page;
                         }
                     }
                 });

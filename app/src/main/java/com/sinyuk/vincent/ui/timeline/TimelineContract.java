@@ -13,7 +13,7 @@ import java.util.List;
 public interface TimelineContract {
     interface View extends BaseView<Presenter> {
 
-        void setData(List<Status> photos);
+        void setData(List<Status> photos,boolean clear);
 
         void startRefreshing();
 
