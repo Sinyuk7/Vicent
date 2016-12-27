@@ -13,6 +13,7 @@ import com.sinyuk.entities.Status;
 import com.sinyuk.myutils.ConvertUtils;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.base.BaseFragment;
+import com.sinyuk.vincent.databinding.LayoutNomoreBinding;
 import com.sinyuk.vincent.databinding.LayoutStatesBinding;
 import com.sinyuk.vincent.utils.rv.GridSpacingItemDecoration;
 
@@ -73,7 +74,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     public RecyclerView.OnScrollListener getLoadMoreListener() {
         return new RecyclerView.OnScrollListener() {
-            static final int PRELOAD_THRESHOLD = 1;
+            static final int PRELOAD_THRESHOLD = 3;
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -106,6 +107,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     @Override
     public void startRefreshing() {
+        adapter.removeFooterBinding();
         binding.viewAnimator.setDisplayedChildId(R.id.swipeRefreshLayout);
         binding.swipeRefreshLayout.setRefreshing(true);
     }
@@ -124,7 +126,7 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
     @Override
     public void stopLoading() {
         binding.progressbar.progressiveStop();
-        binding.progressbar.setVisibility(View.INVISIBLE);
+        binding.progressbar.setVisibility(View.GONE);
     }
 
     @Override
@@ -135,7 +137,16 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     @Override
     public void showNoMore() {
+        if (nomoreBinding == null) {
+            initNomoreBinding();
+        }
+        adapter.addFooterBinding(nomoreBinding);
+    }
 
+    private LayoutNomoreBinding nomoreBinding;
+
+    private void initNomoreBinding() {
+        nomoreBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.layout_nomore, binding.recyclerView, false);
     }
 
     @Override

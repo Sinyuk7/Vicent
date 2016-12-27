@@ -144,6 +144,16 @@
                         android:textSize="@dimen/text_primary_2"
                         tools:text="dsafddsfas\ndfadsf\nds\nafd\nsafsdafsd"/>
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/retweeted_photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/content_space_12"
+                    android:layout_marginTop="@dimen/content_space_12"
+                    android:overScrollMode="never"
+                    android:visibility="@{data.retweetedStatus.picUrls.isEmpty() ? View.GONE:View.VISIBLE}"
+                    tools:src="#ccc"/>
             </LinearLayout>
 
             <TextView

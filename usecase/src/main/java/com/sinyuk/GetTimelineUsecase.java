@@ -53,6 +53,9 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                         if (0 != timeline.getNextCursor()) {
                             ++page;
                         }
+                        System.out.println("NextCursor: " + timeline.getNextCursor());
+                        System.out.println("page: " + page);
+
                     }
                 });
     }

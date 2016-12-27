@@ -116,6 +116,48 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
         }
 
 
+        if (data.getRetweetedStatus() != null && data.getRetweetedStatus().getPicUrls() != null && !data.getRetweetedStatus().getPicUrls().isEmpty()) {
+
+            int spanCount = 1;
+            switch (data.getRetweetedStatus().getPicUrls().size()) {
+                case 1:
+                    spanCount = 1;
+                    break;
+                case 2:
+                case 8:
+                case 4:
+                    spanCount = 2;
+                    break;
+                case 5:
+                case 7:
+                case 3:
+                case 9:
+                case 6:
+                    spanCount = 3;
+                    break;
+
+            }
+            final GridLayoutManager layoutManager = new GridLayoutManager(holder.getBinding().getRoot().getContext(), spanCount) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+
+                @Override
+                public boolean canScrollHorizontally() {
+                    return false;
+                }
+            };
+            layoutManager.setAutoMeasureEnabled(true);
+
+            ((ItemStatusBinding) holder.getBinding()).retweetedPhotos.setLayoutManager(layoutManager);
+
+            ((ItemStatusBinding) holder.getBinding()).retweetedPhotos.setHasFixedSize(true);
+
+            ((ItemStatusBinding) holder.getBinding()).retweetedPhotos.setAdapter(new PhotoCellAdapter(data.getRetweetedStatus().getPicUrls()));
+        }
+
+
         holder.getBinding().executePendingBindings();
     }
 

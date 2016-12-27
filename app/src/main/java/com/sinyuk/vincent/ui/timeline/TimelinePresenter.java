@@ -24,7 +24,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
     private final GetTimelineUsecase mUsecase;
 
     private boolean dataInTransit = false;
-
+    private boolean reachBottom = false;
     private List<Status> statusList = new ArrayList<>();
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not
@@ -76,7 +76,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
                 .doOnSubscribe(() -> dataInTransit = true)
                 .doOnSubscribe(mView::startRefreshing)
                 .doOnSubscribe(() -> statusList.clear())
-                .doOnTerminate(() -> dataInTransit = false)
+                .doOnTerminate(() -> dataInTransit = reachBottom = false)
                 .doOnTerminate(mView::stopRefreshing)
                 .doOnError(mView::showError)
                 .subscribe(timeline -> {
@@ -90,7 +90,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
 
     @Override
     public void loadMore() {
-        if (dataInTransit) return;
+        if (dataInTransit || reachBottom) return;
         mSubscriptions.add(mUsecase.fetch(false)
                 .doOnSubscribe(() -> dataInTransit = true)
                 .doOnTerminate(() -> dataInTransit = false)
@@ -99,6 +99,7 @@ public class TimelinePresenter implements TimelineContract.Presenter {
                 .doOnError(mView::showError)
                 .subscribe(timeline -> {
                     if (timeline.getNextCursor() == 0) {
+                        reachBottom = true;
                         mView.showNoMore();
                     } else {
                         mView.setData(timeline.getStatuses(), false);
