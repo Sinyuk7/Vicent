@@ -2,13 +2,14 @@ package com.sinyuk.vincent.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by sinyuk on 2016/12/24.
  */
 
-public class SquareImageView extends ImageView{
+public class SquareImageView extends GifImageView{
     public SquareImageView(Context context) {
         super(context);
     }

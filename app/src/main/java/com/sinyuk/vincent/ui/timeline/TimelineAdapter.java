@@ -4,25 +4,38 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.DrawableRequestBuilder;
+import com.bumptech.glide.GenericRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.bumptech.glide.load.model.stream.StreamStringLoader;
+import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.sinyuk.entities.Status;
 import com.sinyuk.myutils.system.ScreenUtils;
 import com.sinyuk.vincent.BR;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.databinding.ItemStatusBinding;
 import com.sinyuk.vincent.ui.player.PlayerView;
+import com.sinyuk.vincent.utils.glide.ExtensionUtils;
+import com.sinyuk.vincent.utils.glide.GifDrawableByteTranscoder;
+import com.sinyuk.vincent.utils.glide.StreamByteArrayResourceDecoder;
 import com.sinyuk.vincent.utils.rv.BaseRvAdapter;
 import com.sinyuk.vincent.utils.rv.BindingViewHolder;
 import com.sinyuk.vincent.viewmodels.StatusModel;
 import com.sinyuk.vincent.widgets.SquareImageView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by sinyuk on 2016/12/24.
@@ -35,12 +48,37 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     private final int thirdW;
     private final int halfW;
 
+    private final GenericRequestBuilder<String, InputStream, byte[], GifDrawable> gifBuilder;
+    private final DrawableRequestBuilder<String> jpgBuilder;
 
     public TimelineAdapter(Context context) {
         spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
         screenWidth = ScreenUtils.getScreenWidth(context);
         thirdW = (screenWidth) / 3;
         halfW = (screenWidth) / 2;
+
+        gifBuilder = Glide
+                .with(context)
+                .using(new StreamStringLoader(context), InputStream.class)
+                .from(String.class) // change this if you have a different model like a File and use StreamFileLoader above
+                .as(byte[].class)
+                .transcode(new GifDrawableByteTranscoder(), GifDrawable.class) // pass it on
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE) // cache original
+                .decoder(new StreamByteArrayResourceDecoder())  // load original
+                .sourceEncoder(new StreamEncoder())
+                .placeholder(R.color.image_placeholder)
+                .error(R.color.image_placeholder)
+                .cacheDecoder(new FileToStreamDecoder<>(new StreamByteArrayResourceDecoder()));
+
+
+        jpgBuilder = Glide
+                .with(context)
+                .from(String.class)
+                .crossFade(300)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .placeholder(R.color.image_placeholder)
+                .error(R.color.image_placeholder);
+
     }
 
     @Override
@@ -168,10 +206,12 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
     private class PhotoCellAdapter extends RecyclerView.Adapter<PhotoCellAdapter.PhotoCell> {
 
+
         private List<Status.PicUrls> picUrls = new ArrayList<>();
 
-        PhotoCellAdapter(List<Status.PicUrls> picUrls) {
-            this.picUrls = picUrls;
+        PhotoCellAdapter(List<Status.PicUrls> urls) {
+            picUrls = urls;
+
         }
 
         @Override
@@ -182,13 +222,15 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
         @Override
         public void onBindViewHolder(PhotoCell holder, int position) {
-
-            Glide.with(holder.imageView.getContext())
-                    .load(StatusModel.getPicUrl(
-                            picUrls.get(position).getThumbnailPic(),
-                            picUrls.size()))
-                    .crossFade(300)
-                    .into(holder.imageView);
+            final String url = StatusModel.getPicUrl(
+                    picUrls.get(position).getThumbnailPic(),
+                    picUrls.size());
+            if (ExtensionUtils.isGif(url)) {
+                Log.d("PhotoCellAdapter", "GIF: " + url);
+                gifBuilder.load(url).into(holder.imageView);
+            } else {
+                jpgBuilder.load(url).into(holder.imageView);
+            }
         }
 
 
