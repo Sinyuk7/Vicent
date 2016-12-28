@@ -27,6 +27,13 @@
         <item name="android:layout_height">28dp</item>
     </style>
 
+    <style name="status_actions_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <dimen name="status_avatar">36dp</dimen>
     <dimen name="status_avatar_small">24dp</dimen>
 

@@ -4,12 +4,13 @@
     <color name="colorPrimaryDark">#015e94</color>
     <color name="colorAccent">#0eadf7</color>
     <color name="text_secondary">#9e9e9e</color>
-    <color name="text_primary">#333</color>
+    <color name="text_primary">#333333</color>
     <color name="windowbackground">#007cb6</color>
     <color name="block_quote">#bdeeeeee</color>
     <color name="white_75pt">#a0ffffff</color>
     <color name="image_placeholder">#e7e7e7</color>
     <color name="player_toolbar_scrim_end">#71383838</color>
+
 
 
     <array name="progress_colors">

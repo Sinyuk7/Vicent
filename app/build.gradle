@@ -90,6 +90,7 @@ android {
         compile 'com.makeramen:roundedimageview:2.3.0'
         compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
         compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+        compile 'hanks.xyz:smallbang-library:0.1.2'
 
     }
 }

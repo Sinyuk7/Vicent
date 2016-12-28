@@ -170,14 +170,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/content_space_8"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/content_space_16"
                 android:paddingRight="@dimen/content_space_16">
 
-                <ImageView
+                <com.sinyuk.vincent.widgets.CheckableImageView
                     style="@style/status_actions"
-                    android:src="@drawable/ic_like_2_line"/>
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:onClick="@{(view) -> presenter.onClickThumb(view, data,position)}"
+                    android:src="@drawable/ic_thumb_checkable"/>
 
+                <TextSwitcher
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/content_space_4"
+                    android:layout_marginTop="1dp"
+                    android:inAnimation="@android:anim/fade_in"
+                    android:outAnimation="@android:anim/fade_out">
+
+                    <TextView
+                        style="@style/status_actions_text"
+                        android:text="@{@string/attitudesCountFormat(data.attitudesCount)}"
+                        tools:text="100"/>
+
+                    <TextView
+                        style="@style/status_actions_text"/>
+                </TextSwitcher>
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
@@ -187,16 +207,20 @@
                 <ImageView
                     style="@style/status_actions"
                     android:layout_marginRight="@dimen/content_space_16"
+                    android:onClick="@{(view) -> presenter.onClickShare(view, data,position)}"
                     android:src="@drawable/ic_share"/>
 
-                <ImageView
+                <com.sinyuk.vincent.widgets.CheckableImageView
                     style="@style/status_actions"
                     android:layout_marginRight="@dimen/content_space_16"
-                    android:src="@drawable/ic_information"/>
+                    android:onClick="@{(view) -> presenter.onClickComment(view, data,position)}"
+                    android:src="@drawable/ic_comment_checkable"/>
 
-                <ImageView
+                <com.sinyuk.vincent.widgets.CheckableImageView
                     style="@style/status_actions"
-                    android:src="@drawable/ic_like_1"/>
+                    android:onClick="@{(view) -> presenter.onClickLike(view, data,position)}"
+                    android:src="@drawable/ic_like_checkable"
+                    app:checked="@{data.favorited}"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

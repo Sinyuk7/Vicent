@@ -1,5 +1,6 @@
 package com.sinyuk.vincent.ui.timeline;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,7 @@ import com.sinyuk.vincent.utils.glide.StreamByteArrayResourceDecoder;
 import com.sinyuk.vincent.utils.rv.BaseRvAdapter;
 import com.sinyuk.vincent.utils.rv.BindingViewHolder;
 import com.sinyuk.vincent.viewmodels.StatusModel;
+import com.sinyuk.vincent.widgets.CheckableImageView;
 import com.sinyuk.vincent.widgets.SquareImageView;
 
 import java.io.InputStream;
@@ -36,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.droidsonroids.gif.GifDrawable;
+import xyz.hanks.library.SmallBang;
+import xyz.hanks.library.SmallBangListener;
 
 /**
  * Created by sinyuk on 2016/12/24.
@@ -50,6 +54,7 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
     private final GenericRequestBuilder<String, InputStream, byte[], GifDrawable> gifBuilder;
     private final DrawableRequestBuilder<String> jpgBuilder;
+    private final SmallBang smallBang;
 
     public TimelineAdapter(Context context) {
         spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
@@ -79,6 +84,8 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
                 .placeholder(R.color.image_placeholder)
                 .error(R.color.image_placeholder);
 
+        smallBang = SmallBang.attach2Window((Activity) context);
+        smallBang.setColors(context.getResources().getIntArray(R.array.progress_colors));
     }
 
     @Override
@@ -211,7 +218,6 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
         PhotoCellAdapter(List<Status.PicUrls> urls) {
             picUrls = urls;
-
         }
 
         @Override
@@ -256,5 +262,54 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
             }
         }
 
+    }
+
+    public void onClickThumb(View view, Status status, int position) {
+        smallBang.bang(view, new SmallBangListener() {
+            @Override
+            public void onAnimationStart() {
+
+            }
+
+            @Override
+            public void onAnimationEnd() {
+                ((CheckableImageView) view).setChecked(true);
+            }
+        });
+    }
+
+
+    public void onClickShare(View view, Status status, int position) {
+    }
+
+    public void onClickComment(View view, Status status, int position) {
+        smallBang.bang(view, new SmallBangListener() {
+            @Override
+            public void onAnimationStart() {
+
+            }
+
+            @Override
+            public void onAnimationEnd() {
+                ((CheckableImageView) view).setChecked(true);
+            }
+        });
+    }
+
+    public void onClickLike(View view, Status status, int position) {
+        smallBang.bang(view, new SmallBangListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationEnd() {
+                if (position < mDataSet.size()) {
+                    mDataSet.get(position).setFavorited(!mDataSet.get(position).isFavorited());
+                }
+                ((CheckableImageView) view).setChecked(true);
+//                notifyItemChanged(position);
+            }
+        });
     }
 }
