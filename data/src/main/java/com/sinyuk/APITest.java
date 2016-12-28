@@ -1,6 +1,6 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Timeline;
+import com.sinyuk.entities.User;
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.OauthManager;
 import com.sinyuk.remote.RemoteDataSource;
@@ -23,22 +23,22 @@ public class APITest {
 
     private static void test(RemoteDataSource remoteDataSource) {
         System.out.println("test");
-
-        remoteDataSource.public_timeline(1)
-                .subscribe(new Observer<Timeline>() {
+        long id = 2996704602L;
+        remoteDataSource.users_show(id)
+                .subscribe(new Observer<User>() {
                     @Override
                     public void onCompleted() {
-                        System.out.println("onCompleted");
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+
                     }
 
                     @Override
-                    public void onNext(Timeline timeline) {
-                        System.out.println("onNext");
+                    public void onNext(User user) {
+
                     }
                 });
     }

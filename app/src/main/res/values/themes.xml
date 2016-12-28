@@ -12,4 +12,10 @@
 
 
     <color name="cardview_background">#ffffff</color>
+
+    <style name="AppTheme.Player">
+    </style>
+
+    <bool name="shouldFitSystemWindows">true</bool>
+    <dimen name="statusbar_palceholder">0dp</dimen>
 </resources>

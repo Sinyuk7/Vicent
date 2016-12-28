@@ -27,7 +27,8 @@
         <activity
             android:name=".ui.player.PlayerView"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Player"/>
     </application>
 
 </manifest>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Player">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <bool name="shouldFitSystemWindows">false</bool>
+    <dimen name="statusbar_palceholder">24dp</dimen>
+</resources>

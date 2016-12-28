@@ -3,6 +3,7 @@ package com.sinyuk.remote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sinyuk.entities.Timeline;
+import com.sinyuk.entities.User;
 import com.sinyuk.utils.ErrorCheckerTransformer;
 import com.sinyuk.utils.OauthInterceptor;
 
@@ -97,5 +98,17 @@ public final class RemoteDataSource implements RemoteRepository {
     public Observable<Timeline> public_timeline(int page) {
         return weiboService.public_timeline(page)
                 .compose(new ErrorCheckerTransformer<Response<Timeline>, Timeline>());
+    }
+
+    @Override
+    public Observable<User> users_show(long uid) {
+        return weiboService.users_show(uid)
+                .compose(new ErrorCheckerTransformer<Response<User>, User>());
+    }
+
+    @Override
+    public Observable<User> domain_show(String domain) {
+        return weiboService.domain_show(domain)
+                .compose(new ErrorCheckerTransformer<Response<User>, User>());
     }
 }

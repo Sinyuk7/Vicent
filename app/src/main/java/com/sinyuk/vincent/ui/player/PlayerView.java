@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import com.sinyuk.myutils.android.ActivityUtils;
+import com.sinyuk.vincent.BlankFragment;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.VincentApplication;
 import com.sinyuk.vincent.base.BaseActivity;
@@ -42,17 +44,44 @@ public class PlayerView extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.player_view);
 
-        TimelineView timelineView = (TimelineView) getSupportFragmentManager().findFragmentById(R.id.timeline_fragment);
 
-        if (timelineView == null) {
-            timelineView = new TimelineView();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), timelineView, R.id.timeline_fragment);
-        }
+        initVP();
+    }
 
+    private void initVP() {
+        TimelineView timelineView = new TimelineView();
         long uid = getIntent().getLongExtra(KEY_UID, 0);
-
         VincentApplication.get(this).getAppComponent()
-                .plus(new PlayerViewModule(timelineView, "user", uid))
+                .plus(new PlayerViewModule(timelineView, "user", 0))
                 .inject(this);
+
+        BlankFragment exploreView = new BlankFragment();
+        BlankFragment messageView = new BlankFragment();
+        BlankFragment profileView = new BlankFragment();
+
+        binding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return timelineView;
+                    case 1:
+                        return exploreView;
+                    case 2:
+                        return messageView;
+                    case 3:
+                        return profileView;
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 4;
+            }
+        });
+
+        binding.viewPager.setOffscreenPageLimit(3);
     }
 }

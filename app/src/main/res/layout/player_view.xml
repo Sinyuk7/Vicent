@@ -1,27 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/timeline_fragment"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:background="#fff"/>
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="@bool/shouldFitSystemWindows">
 
-            <android.support.v7.widget.Toolbar
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="Player"/>
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="@bool/shouldFitSystemWindows"
+                app:contentScrim="@color/colorPrimaryDark"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:statusBarScrim="@color/colorPrimaryDark"
+                app:titleEnabled="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <com.sinyuk.vincent.widgets.RatioImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:imageHOverW="0.392"
+                        tools:src="@drawable/avatar"/>
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        style="@style/player_avatar"
+                        android:layout_marginTop="@dimen/player_avatar_margin"
+                        android:background="@drawable/player_avatar"
+                        android:padding="@dimen/player_avatar_padding"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/avatar"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/content_space_16"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        tools:text="Sinyuk"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/content_space_8"
+                        tools:text="This is my bio"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:layout_marginTop="@dimen/content_space_16"
+                        android:background="@color/colorAccent"/>
+                </LinearLayout>
+
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@drawable/player_toolbar"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_enter"
+                    app:title="sinyuk"
+                    app:titleTextColor="@android:color/white"/>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
         </android.support.design.widget.AppBarLayout>
+
+
     </android.support.design.widget.CoordinatorLayout>
 </layout>

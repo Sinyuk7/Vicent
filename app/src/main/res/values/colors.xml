@@ -9,6 +9,7 @@
     <color name="block_quote">#bdeeeeee</color>
     <color name="white_75pt">#a0ffffff</color>
     <color name="image_placeholder">#e7e7e7</color>
+    <color name="player_toolbar_scrim_end">#71383838</color>
 
 
     <array name="progress_colors">

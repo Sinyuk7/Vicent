@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="player_avatar">
+        <item name="android:layout_width">@dimen/player_avatar</item>
+        <item name="android:layout_height">@dimen/player_avatar</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="riv_corner_radius">4dp</item>
+    </style>
+
+    <dimen name="player_avatar">72dp</dimen>
+    <dimen name="player_avatar_padding">2dp</dimen>
+    <dimen name="player_avatar_margin">-56dp</dimen>
+</resources>

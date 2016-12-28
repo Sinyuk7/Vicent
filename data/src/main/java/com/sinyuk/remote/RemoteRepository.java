@@ -1,6 +1,7 @@
 package com.sinyuk.remote;
 
 import com.sinyuk.entities.Timeline;
+import com.sinyuk.entities.User;
 
 import rx.Observable;
 
@@ -33,4 +34,9 @@ public interface RemoteRepository {
     //            返回最新的公共微博
 
     Observable<Timeline> public_timeline(int page);
+
+
+    Observable<User> users_show(long uid);
+
+    Observable<User> domain_show(String domain);
 }

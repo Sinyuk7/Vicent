@@ -1,5 +1,6 @@
 package com.sinyuk.vincent.ui.timeline;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,6 +35,11 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
 
     private LayoutStatesBinding binding;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,8 +52,9 @@ public class TimelineView extends BaseFragment implements TimelineContract.View 
         super.onViewCreated(view, savedInstanceState);
         initSwipeRefreshLayout();
         initList();
-        presenter.refresh();
-
+        if (presenter != null) {
+            presenter.refresh();
+        }
     }
 
     private void initSwipeRefreshLayout() {

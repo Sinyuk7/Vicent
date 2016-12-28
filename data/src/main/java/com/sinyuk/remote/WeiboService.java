@@ -47,7 +47,13 @@ public interface WeiboService {
     //    users/show
     //    根据用户ID获取用户信息
 
-    @GET("statuses/users/show.json")
+    @GET("users/show.json")
     Observable<Response<User>> users_show(
             @Query("uid") long uid);
+
+    //    users/domain_show
+//   通过个性化域名获取用户资料以及用户最新的一条微博
+    @GET("users/domain_show.json")
+    Observable<Response<User>> domain_show(
+            @Query("domain") String domain);
 }
