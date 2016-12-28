@@ -3,6 +3,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="user"
+            type="com.sinyuk.entities.User"/>
+    </data>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +27,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
             android:fitsSystemWindows="@bool/shouldFitSystemWindows">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -42,6 +50,8 @@
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
                         app:imageHOverW="0.392"
+                        app:player_cover="@{user.coverImage}"
+                        app:player_cover_phone="@{user.coverImagePhone}"
                         tools:src="@drawable/avatar"/>
 
                     <com.makeramen.roundedimageview.RoundedImageView
@@ -50,12 +60,14 @@
                         android:background="@drawable/player_avatar"
                         android:padding="@dimen/player_avatar_padding"
                         android:scaleType="centerCrop"
+                        app:player_avatar="@{user.avatarLarge}"
                         tools:src="@drawable/avatar"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/content_space_16"
+                        android:text="@{user.screenName}"
                         android:textSize="36sp"
                         android:textStyle="bold"
                         tools:text="Sinyuk"/>
@@ -64,6 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/content_space_8"
+                        android:text="@{user.description}"
                         tools:text="This is my bio"/>
 
                     <FrameLayout
@@ -77,10 +90,11 @@
                 <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_marginTop="@dimen/statusbar_palceholder"
                     android:background="@drawable/player_toolbar"
                     app:layout_collapseMode="pin"
-                    app:navigationIcon="@drawable/ic_enter"
-                    app:title="sinyuk"
+                    app:navigationIcon="@drawable/ic_back_arrow"
+                    app:title="@{user.name}"
                     app:titleTextColor="@android:color/white"/>
             </android.support.design.widget.CollapsingToolbarLayout>
 

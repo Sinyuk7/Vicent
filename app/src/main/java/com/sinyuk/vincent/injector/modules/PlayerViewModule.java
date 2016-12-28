@@ -3,9 +3,7 @@ package com.sinyuk.vincent.injector.modules;
 import android.support.annotation.Nullable;
 
 import com.sinyuk.vincent.injector.scopes.ActivityScope;
-import com.sinyuk.vincent.ui.timeline.TimelineContract;
-
-import org.jetbrains.annotations.NotNull;
+import com.sinyuk.vincent.ui.player.PlayerContract;
 
 import javax.inject.Named;
 
@@ -17,28 +15,24 @@ import dagger.Provides;
  */
 @Module
 public class PlayerViewModule {
-    private final TimelineContract.View timelineView;
-    @Nullable
+    private final PlayerContract.View playerView;
     @Named("uid")
     private final long uid;
-    @Named("timeline_type")
-    @NotNull
-    private final String timeline_type;
 
+    @Nullable
+    @Named("domain")
+    private final String domain;
 
-    public PlayerViewModule(TimelineContract.View timelineView,
-                            @NotNull String timeline_type,
-                            long uid) {
-        this.timelineView = timelineView;
+    public PlayerViewModule(PlayerContract.View playerView, long uid, @Nullable String domain) {
+        this.playerView = playerView;
         this.uid = uid;
-        this.timeline_type = timeline_type;
-
+        this.domain = domain;
     }
 
     @Provides
     @ActivityScope
-    TimelineContract.View timelineView() {
-        return timelineView;
+    PlayerContract.View playerView() {
+        return playerView;
     }
 
 
@@ -51,9 +45,11 @@ public class PlayerViewModule {
 
 
     @Provides
-    @Named("timeline_type")
     @ActivityScope
-    String timeline_type() {
-        return timeline_type;
+    @Named("domain")
+    @Nullable
+    String domain() {
+        return domain;
     }
+
 }

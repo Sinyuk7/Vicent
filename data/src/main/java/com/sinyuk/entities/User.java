@@ -27,6 +27,17 @@ public final class User {
     private String url;
     @SerializedName("profile_image_url")
     private String profileImageUrl;
+    @SerializedName("cover_image")
+    private String coverImage;
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
     @SerializedName("cover_image_phone")
     private String coverImagePhone;
     @SerializedName("profile_url")

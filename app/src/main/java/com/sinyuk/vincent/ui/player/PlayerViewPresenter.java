@@ -1,11 +1,14 @@
 package com.sinyuk.vincent.ui.player;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.sinyuk.GetPlayerUsecase;
+import com.sinyuk.entities.User;
 
 import javax.inject.Inject;
 
+import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -13,7 +16,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public class PlayerViewPresenter implements PlayerContract.Presenter {
-    private static final String TAG = "TimelinePresenter";
+    private static final String TAG = "PlayerViewPresenter";
     @NonNull
     private final PlayerContract.View mView;
     @NonNull
@@ -42,11 +45,32 @@ public class PlayerViewPresenter implements PlayerContract.Presenter {
 
     @Override
     public void subscribe() {
-        mSubscriptions.clear();
+        Log.d(TAG, "subscribe: ");
     }
 
     @Override
     public void unsubscribe() {
+        Log.d(TAG, "unsubscribe: ");
+        mSubscriptions.clear();
+    }
 
+    @Override
+    public void fetchPlayer() {
+        mSubscriptions.add(mUsecase.execute().subscribe(new Observer<User>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(User user) {
+                mView.bindPlayer(user);
+            }
+        }));
     }
 }

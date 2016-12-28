@@ -20,14 +20,16 @@ public class GetPlayerUsecase extends Usecase<User> {
 
     @Named("uid")
     private final long uid;
+
     @Named("domain")
+    @Nullable
     private final String domain;
 
     @Inject
-    public GetPlayerUsecase(RemoteRepository mRepository,
-                            SchedulerTransformer mSchedulerTransformer,
-                            @Named("uid") long uid,
-                            @Named("domain") String domain) {
+    GetPlayerUsecase(RemoteRepository mRepository,
+                     @Named("io_main") SchedulerTransformer mSchedulerTransformer,
+                     @Named("uid") long uid,
+                     @Nullable @Named("domain") String domain) {
         this.mRepository = mRepository;
         this.mSchedulerTransformer = mSchedulerTransformer;
         this.uid = uid;

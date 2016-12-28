@@ -8,14 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.sinyuk.entities.User;
 import com.sinyuk.vincent.BlankFragment;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.VincentApplication;
 import com.sinyuk.vincent.base.BaseActivity;
 import com.sinyuk.vincent.databinding.PlayerViewBinding;
 import com.sinyuk.vincent.injector.modules.PlayerViewModule;
-import com.sinyuk.vincent.ui.timeline.TimelinePresenter;
-import com.sinyuk.vincent.ui.timeline.TimelineView;
 
 import javax.inject.Inject;
 
@@ -23,10 +22,14 @@ import javax.inject.Inject;
  * Created by sinyuk on 2016/12/25.
  */
 
-public class PlayerView extends BaseActivity {
+public class PlayerView extends BaseActivity implements PlayerContract.View {
 
+    @SuppressWarnings("used")
+    @Inject
+    PlayerViewPresenter playerViewPresenter;
 
     private static final String KEY_UID = "UID";
+    private PlayerContract.Presenter presenter;
 
     public static void start(Context context, long uid) {
         Intent starter = new Intent(context, PlayerView.class);
@@ -36,25 +39,39 @@ public class PlayerView extends BaseActivity {
 
     private PlayerViewBinding binding;
 
-    @Inject
-    TimelinePresenter timelinePresenter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        long uid = getIntent().getLongExtra(KEY_UID, 0);
+
+        VincentApplication.get(this).getAppComponent()
+                .plus(new PlayerViewModule(this, 2996704602L, null))
+                .inject(this);
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.player_view);
 
-
         initVP();
+
+        presenter.fetchPlayer();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
     }
 
     private void initVP() {
-        TimelineView timelineView = new TimelineView();
-        long uid = getIntent().getLongExtra(KEY_UID, 0);
-        VincentApplication.get(this).getAppComponent()
-                .plus(new PlayerViewModule(timelineView, "user", 0))
-                .inject(this);
-
+        BlankFragment timelineView = new BlankFragment();
         BlankFragment exploreView = new BlankFragment();
         BlankFragment messageView = new BlankFragment();
         BlankFragment profileView = new BlankFragment();
@@ -83,5 +100,15 @@ public class PlayerView extends BaseActivity {
         });
 
         binding.viewPager.setOffscreenPageLimit(3);
+    }
+
+    @Override
+    public void setPresenter(PlayerContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void bindPlayer(User user) {
+        binding.setUser(user);
     }
 }
