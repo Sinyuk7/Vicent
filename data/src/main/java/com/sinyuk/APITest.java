@@ -30,7 +30,7 @@ public class APITest {
                 .subscribe(new Observer<List<Comment>>() {
                     @Override
                     public void onCompleted() {
-                        
+
                     }
 
                     @Override
