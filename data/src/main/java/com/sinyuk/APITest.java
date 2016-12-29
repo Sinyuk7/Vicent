@@ -1,11 +1,9 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Comment;
+import com.sinyuk.entities.Comments;
 import com.sinyuk.remote.Endpoint;
 import com.sinyuk.remote.OauthManager;
 import com.sinyuk.remote.RemoteDataSource;
-
-import java.util.List;
 
 import rx.Observer;
 
@@ -27,7 +25,7 @@ public class APITest {
         System.out.println("test");
         long id = 2996704602L;
         remoteDataSource.comment_timeline(1)
-                .subscribe(new Observer<List<Comment>>() {
+                .subscribe(new Observer<Comments>() {
                     @Override
                     public void onCompleted() {
 
@@ -39,7 +37,7 @@ public class APITest {
                     }
 
                     @Override
-                    public void onNext(List<Comment> comments) {
+                    public void onNext(Comments comments) {
 
                     }
                 });

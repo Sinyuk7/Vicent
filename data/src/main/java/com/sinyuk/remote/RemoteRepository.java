@@ -1,10 +1,8 @@
 package com.sinyuk.remote;
 
-import com.sinyuk.entities.Comment;
+import com.sinyuk.entities.Comments;
 import com.sinyuk.entities.Timeline;
 import com.sinyuk.entities.User;
-
-import java.util.List;
 
 import rx.Observable;
 
@@ -46,9 +44,9 @@ public interface RemoteRepository {
 
     //    comments/comment_show
     //    根据微博ID返回某条微博的评论列表
-    Observable<List<Comment>> comment_show(long id, int page);
+    Observable<Comments> comment_show(long id, int page);
 
     //    comments/comment_timeline
     //    获取当前登录用户的最新评论包括接收到的与发出的
-    Observable<List<Comment>> comment_timeline(int page);
+    Observable<Comments> comment_timeline(int page);
 }

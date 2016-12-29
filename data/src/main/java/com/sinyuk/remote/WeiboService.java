@@ -1,10 +1,8 @@
 package com.sinyuk.remote;
 
-import com.sinyuk.entities.Comment;
+import com.sinyuk.entities.Comments;
 import com.sinyuk.entities.Timeline;
 import com.sinyuk.entities.User;
-
-import java.util.List;
 
 import retrofit2.Response;
 import retrofit2.http.GET;
@@ -63,13 +61,13 @@ public interface WeiboService {
     //    comments/comment_show
     //    根据微博ID返回某条微博的评论列表
     @GET("comments/show.json")
-    Observable<Response<List<Comment>>> comment_show(
+    Observable<Response<Comments>> comment_show(
             @Query("id") long id,
             @Query("page") int page);
 
     //    comments/comment_timeline
     //    获取当前登录用户的最新评论包括接收到的与发出的
     @GET("comments/timeline.json")
-    Observable<Response<List<Comment>>> comment_timeline(
+    Observable<Response<Comments>> comment_timeline(
             @Query("page") int page);
 }
