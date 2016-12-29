@@ -211,6 +211,7 @@
                     android:src="@drawable/ic_share"/>
 
                 <com.sinyuk.vincent.widgets.CheckableImageView
+                    android:id="@+id/commentButton"
                     style="@style/status_actions"
                     android:layout_marginRight="@dimen/content_space_16"
                     android:onClick="@{(view) -> presenter.onClickComment(view, data,position)}"

@@ -44,7 +44,7 @@ public class StatusDiffCallback extends DiffUtil.Callback {
         return mNewList.get(newItemPosition).equals(mOldList.get(oldItemPosition));
     }
 
-    public static final String KEY_FAVORITED = "FAVORITED";
+    static final String KEY_FAVORITED = "FAVORITED";
 
     @Nullable
     @Override

@@ -2,12 +2,14 @@ package com.sinyuk.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sinyuk.entities.Comment;
 import com.sinyuk.entities.Timeline;
 import com.sinyuk.entities.User;
 import com.sinyuk.utils.ErrorCheckerTransformer;
 import com.sinyuk.utils.OauthInterceptor;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -110,5 +112,17 @@ public final class RemoteDataSource implements RemoteRepository {
     public Observable<User> domain_show(String domain) {
         return weiboService.domain_show(domain)
                 .compose(new ErrorCheckerTransformer<Response<User>, User>());
+    }
+
+    @Override
+    public Observable<List<Comment>> comment_show(long id, int page) {
+        return weiboService.comment_show(id, page)
+                .compose(new ErrorCheckerTransformer<Response<List<Comment>>, List<Comment>>());
+    }
+
+    @Override
+    public Observable<List<Comment>> comment_timeline(int page) {
+        return weiboService.comment_timeline(page)
+                .compose(new ErrorCheckerTransformer<Response<List<Comment>>, List<Comment>>());
     }
 }

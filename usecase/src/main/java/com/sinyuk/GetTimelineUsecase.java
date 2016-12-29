@@ -104,7 +104,7 @@ public class GetTimelineUsecase extends Usecase<Timeline> {
                 return mRepository.user_timeline(uid, page, feature)
                         .compose(mSchedulerTransformer);
             default:
-                return Observable.error(new Throwable("timeline type can't be null!"));
+                return Observable.error(new Throwable("comment_timeline type can't be null!"));
         }
 
     }
