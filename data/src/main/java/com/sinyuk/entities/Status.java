@@ -2,13 +2,14 @@ package com.sinyuk.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by sinyuk on 2016/12/23.
  */
 
-public class Status {
+public class Status implements Serializable {
     @SerializedName("created_at")
     private String createdAt;
     @SerializedName("id")
@@ -255,5 +256,11 @@ public class Status {
 
     public void setLongText(boolean longText) {
         isLongText = longText;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return (int) id;
     }
 }

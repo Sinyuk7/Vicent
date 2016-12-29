@@ -44,12 +44,19 @@ public class StatusDiffCallback extends DiffUtil.Callback {
         return mNewList.get(newItemPosition).equals(mOldList.get(oldItemPosition));
     }
 
+    public static final String KEY_FAVORITED = "FAVORITED";
+
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        Status newStatus = mNewList.get(newItemPosition);
-        Status oldStatus = mOldList.get(oldItemPosition);
+        Status newItem = mNewList.get(newItemPosition);
+        Status oldItem = mOldList.get(oldItemPosition);
         Bundle diffBundle = new Bundle();
+
+        if (newItem.isFavorited() != (oldItem.isFavorited())) {
+            diffBundle.putBoolean(KEY_FAVORITED, newItem.isFavorited());
+        }
+
         if (diffBundle.size() == 0) return null;
         return diffBundle;
     }

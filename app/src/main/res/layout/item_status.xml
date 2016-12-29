@@ -217,6 +217,7 @@
                     android:src="@drawable/ic_comment_checkable"/>
 
                 <com.sinyuk.vincent.widgets.CheckableImageView
+                    android:id="@+id/likeButton"
                     style="@style/status_actions"
                     android:onClick="@{(view) -> presenter.onClickLike(view, data,position)}"
                     android:src="@drawable/ic_like_checkable"

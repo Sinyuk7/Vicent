@@ -3,6 +3,7 @@ package com.sinyuk.vincent.ui.timeline;
 import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -47,20 +48,17 @@ import xyz.hanks.library.SmallBangListener;
 
 public class TimelineAdapter extends BaseRvAdapter<Status> {
 
-    private final int spacing;
-    private final int screenWidth;
-    private final int thirdW;
-    private final int halfW;
+    private static final String TAG = "TimelineAdapter";
 
     private final GenericRequestBuilder<String, InputStream, byte[], GifDrawable> gifBuilder;
     private final DrawableRequestBuilder<String> jpgBuilder;
     private final SmallBang smallBang;
 
     public TimelineAdapter(Context context) {
-        spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
-        screenWidth = ScreenUtils.getScreenWidth(context);
-        thirdW = (screenWidth) / 3;
-        halfW = (screenWidth) / 2;
+        int spacing = context.getResources().getDimensionPixelOffset(R.dimen.photo_cell_spacing);
+        int screenWidth = ScreenUtils.getScreenWidth(context);
+        int thirdW = (screenWidth) / 3;
+        int halfW = (screenWidth) / 2;
 
         gifBuilder = Glide
                 .with(context)
@@ -103,10 +101,22 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
 
     @Override
     protected void onBindMyItemViewHolder(BindingViewHolder holder, int itemPositionInData, List<Object> payloads) {
-        if (payloads.isEmpty()) {
+        if (payloads == null || payloads.isEmpty()) {
             onBindMyItemViewHolder(holder, itemPositionInData);
         } else {
+            Log.d(TAG, "update payloads: ");
+            Bundle o = (Bundle) payloads.get(0);
+            for (String key : o.keySet()) {
+                switch (key) {
+                    case StatusDiffCallback.KEY_FAVORITED: {
+                        Log.d(TAG, "KEY_FAVORITED: ");
+                        ((ItemStatusBinding) holder.getBinding()).likeButton
+                                .setChecked(o.getBoolean(StatusDiffCallback.KEY_FAVORITED));
+                        break;
+                    }
 
+                }
+            }
         }
     }
 
@@ -297,19 +307,32 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     }
 
     public void onClickLike(View view, Status status, int position) {
-        smallBang.bang(view, new SmallBangListener() {
-            @Override
-            public void onAnimationStart() {
-            }
+        Log.d(TAG, "position: " + position);
+        if (mDataSet.contains(status)) {
+            Log.d(TAG, "data index: " + mDataSet.indexOf(status)
+            );
+        }
 
-            @Override
-            public void onAnimationEnd() {
-                if (position < mDataSet.size()) {
-                    mDataSet.get(position).setFavorited(!mDataSet.get(position).isFavorited());
-                }
-                ((CheckableImageView) view).setChecked(true);
-//                notifyItemChanged(position);
-            }
-        });
+        boolean oldState = mDataSet.get(position).isFavorited();
+        if (position < mDataSet.size()) {
+            mDataSet.get(position).setFavorited(!oldState);
+        }
+        ((CheckableImageView) view).setChecked(!oldState);
+
+        final Bundle bundle = new Bundle();
+        bundle.putBoolean(StatusDiffCallback.KEY_FAVORITED, !oldState);
+        notifyItemChanged(position, bundle);
+
+//        smallBang.bang(view, new SmallBangListener() {
+//            @Override
+//            public void onAnimationStart() {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd() {
+//
+//            }
+//        });
     }
 }
