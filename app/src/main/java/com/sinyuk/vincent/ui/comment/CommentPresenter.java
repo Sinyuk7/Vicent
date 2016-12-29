@@ -1,9 +1,9 @@
-package com.sinyuk.vincent.ui.timeline;
+package com.sinyuk.vincent.ui.comment;
 
 import android.support.annotation.NonNull;
 
-import com.sinyuk.GetTimelineUsecase;
-import com.sinyuk.entities.Status;
+import com.sinyuk.GetCommentUsecase;
+import com.sinyuk.entities.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,29 +13,25 @@ import javax.inject.Inject;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by sinyuk on 2016/12/21.
+ * Created by sinyuk on 2016/12/29.
  */
 
-public class TimelinePresenter implements TimelineContract.Presenter {
-    private static final String TAG = "TimelinePresenter";
+public class CommentPresenter implements CommentContract.Presenter {
+    private static final String TAG = "CommentPresenter";
+
     @NonNull
-    private final TimelineContract.View mView;
+    private final CommentContract.View mView;
     @NonNull
-    private final GetTimelineUsecase mUsecase;
+    private final GetCommentUsecase mUsecase;
 
     private boolean dataInTransit = false;
     private boolean reachBottom = false;
-    private List<Status> statusList = new ArrayList<>();
-    /**
-     * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not
-     * injected with {@code @Nullable} values.
-     */
+    private List<Comment> commentList = new ArrayList<>();
+
     private CompositeSubscription mSubscriptions;
 
     @Inject
-    TimelinePresenter(
-            @NonNull TimelineContract.View mView,
-            @NonNull GetTimelineUsecase mUsecase) {
+    CommentPresenter(@NonNull CommentContract.View mView, @NonNull GetCommentUsecase mUsecase) {
         this.mView = mView;
         this.mUsecase = mUsecase;
         mSubscriptions = new CompositeSubscription();
@@ -51,23 +47,6 @@ public class TimelinePresenter implements TimelineContract.Presenter {
         mView.setPresenter(this);
     }
 
-
-    @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unsubscribe() {
-        mSubscriptions.clear();
-    }
-
-
-    @Override
-    public void setFeature(int feature) {
-        mUsecase.setFeature(feature);
-    }
-
     @Override
     public void refresh() {
         if (dataInTransit) return;
@@ -75,15 +54,15 @@ public class TimelinePresenter implements TimelineContract.Presenter {
         mSubscriptions.add(mUsecase.fetch(true)
                 .doOnSubscribe(() -> dataInTransit = true)
                 .doOnSubscribe(mView::startRefreshing)
-                .doOnSubscribe(() -> statusList.clear())
+                .doOnSubscribe(() -> commentList.clear())
                 .doOnTerminate(() -> dataInTransit = reachBottom = false)
                 .doOnTerminate(mView::stopRefreshing)
                 .doOnError(mView::showError)
-                .subscribe(timeline -> {
-                    if (timeline.getTotalNumber() == 0) {
+                .subscribe(comments -> {
+                    if (comments.isEmpty()) {
                         mView.showEmpty();
                     } else {
-                        mView.setData(timeline.getStatuses(), true);
+                        mView.setData(comments, true);
                     }
                 }));
     }
@@ -97,15 +76,23 @@ public class TimelinePresenter implements TimelineContract.Presenter {
                 .doOnSubscribe(mView::startLoading)
                 .doOnTerminate(mView::stopLoading)
                 .doOnError(mView::showError)
-                .subscribe(timeline -> {
-                    if (timeline.getNextCursor() == 0) {
+                .subscribe(comments -> {
+                    if (comments.isEmpty()) {
                         reachBottom = true;
                         mView.showNoMore();
                     } else {
-                        mView.setData(timeline.getStatuses(), false);
+                        mView.setData(comments, false);
                     }
                 }));
     }
 
+    @Override
+    public void subscribe() {
 
+    }
+
+    @Override
+    public void unsubscribe() {
+        mSubscriptions.clear();
+    }
 }

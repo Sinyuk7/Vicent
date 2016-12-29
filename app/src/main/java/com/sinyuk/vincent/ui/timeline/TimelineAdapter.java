@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.sinyuk.myutils.system.ScreenUtils;
 import com.sinyuk.vincent.BR;
 import com.sinyuk.vincent.R;
 import com.sinyuk.vincent.databinding.ItemStatusBinding;
+import com.sinyuk.vincent.ui.comment.CommentBottomSheet;
 import com.sinyuk.vincent.ui.player.PlayerView;
 import com.sinyuk.vincent.utils.glide.ExtensionUtils;
 import com.sinyuk.vincent.utils.glide.GifDrawableByteTranscoder;
@@ -293,17 +295,9 @@ public class TimelineAdapter extends BaseRvAdapter<Status> {
     }
 
     public void onClickComment(View view, Status status, int position) {
-        smallBang.bang(view, new SmallBangListener() {
-            @Override
-            public void onAnimationStart() {
-
-            }
-
-            @Override
-            public void onAnimationEnd() {
-                ((CheckableImageView) view).setChecked(true);
-            }
-        });
+        CommentBottomSheet.newInstance(status.getId())
+                .show(((AppCompatActivity) view.getContext()).getSupportFragmentManager(),
+                        CommentBottomSheet.class.getSimpleName());
     }
 
     public void onClickLike(View view, Status status, int position) {

@@ -2,6 +2,7 @@ package com.sinyuk.vincent.injector.components;
 
 import com.sinyuk.vincent.injector.modules.ApiModule;
 import com.sinyuk.vincent.injector.modules.AppModule;
+import com.sinyuk.vincent.injector.modules.CommentViewModule;
 import com.sinyuk.vincent.injector.modules.HomeViewModule;
 import com.sinyuk.vincent.injector.modules.PlayerViewModule;
 
@@ -37,4 +38,6 @@ public interface AppComponent {
     HomeViewComponent plus(HomeViewModule module);
 
     PlayerViewComponent plus(PlayerViewModule module);
+
+    CommentViewComponent plus(CommentViewModule module);
 }
