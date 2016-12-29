@@ -59,7 +59,7 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .doOnTerminate(mView::stopRefreshing)
                 .doOnError(mView::showError)
                 .subscribe(comments -> {
-                    if (comments.getComments().isEmpty()) {
+                    if (comments.getTotalNumber() == 0) {
                         mView.showEmpty();
                     } else {
                         mView.setData(comments.getComments(), true);
@@ -77,7 +77,7 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .doOnTerminate(mView::stopLoading)
                 .doOnError(mView::showError)
                 .subscribe(comments -> {
-                    if (comments.getComments().isEmpty()) {
+                    if (comments.getNextCursor() == 0) {
                         reachBottom = true;
                         mView.showNoMore();
                     } else {

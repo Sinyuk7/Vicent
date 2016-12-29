@@ -48,7 +48,7 @@ public class GetCommentUsecase extends Usecase<Comments> {
                 .doOnNext(new Action1<Comments>() {
                     @Override
                     public void call(Comments comments) {
-                        if (!comments.getComments().isEmpty()) {
+                        if (comments.getNextCursor() != 0) {
                             ++page;
                         }
                     }

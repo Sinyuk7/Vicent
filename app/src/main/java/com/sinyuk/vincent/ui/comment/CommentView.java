@@ -2,6 +2,7 @@ package com.sinyuk.vincent.ui.comment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,42 +49,42 @@ public class CommentView extends BaseFragment implements CommentContract.View {
 
     @Override
     public void setData(List<Comment> comments, boolean clear) {
-
+        Log.d(TAG, "setData: ");
     }
 
     @Override
     public void startRefreshing() {
-
+        Log.d(TAG, "startRefreshing: ");
     }
 
     @Override
     public void stopRefreshing() {
-
+        Log.d(TAG, "stopRefreshing: ");
     }
 
     @Override
     public void startLoading() {
-
+        Log.d(TAG, "startLoading: ");
     }
 
     @Override
     public void stopLoading() {
-
+        Log.d(TAG, "stopLoading: ");
     }
 
     @Override
     public void showError(Throwable throwable) {
-
+        Log.d(TAG, "showError: ");
     }
 
     @Override
     public void showNoMore() {
-
+        Log.d(TAG, "showNoMore: ");
     }
 
     @Override
     public void showEmpty() {
-
+        Log.d(TAG, "showEmpty: ");
     }
 
     @Override
