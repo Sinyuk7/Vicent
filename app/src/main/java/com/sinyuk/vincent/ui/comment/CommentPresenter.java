@@ -59,10 +59,10 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .doOnTerminate(mView::stopRefreshing)
                 .doOnError(mView::showError)
                 .subscribe(comments -> {
-                    if (comments.isEmpty()) {
+                    if (comments.getComments().isEmpty()) {
                         mView.showEmpty();
                     } else {
-                        mView.setData(comments, true);
+                        mView.setData(comments.getComments(), true);
                     }
                 }));
     }
@@ -77,11 +77,11 @@ public class CommentPresenter implements CommentContract.Presenter {
                 .doOnTerminate(mView::stopLoading)
                 .doOnError(mView::showError)
                 .subscribe(comments -> {
-                    if (comments.isEmpty()) {
+                    if (comments.getComments().isEmpty()) {
                         reachBottom = true;
                         mView.showNoMore();
                     } else {
-                        mView.setData(comments, false);
+                        mView.setData(comments.getComments(), false);
                     }
                 }));
     }

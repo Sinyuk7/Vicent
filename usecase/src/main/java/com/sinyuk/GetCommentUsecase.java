@@ -1,10 +1,8 @@
 package com.sinyuk;
 
-import com.sinyuk.entities.Comment;
+import com.sinyuk.entities.Comments;
 import com.sinyuk.remote.RemoteRepository;
 import com.sinyuk.utils.SchedulerTransformer;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,11 +15,11 @@ import rx.functions.Action1;
  * Created by sinyuk on 2016/12/29.
  */
 
-public class GetCommentUsecase extends Usecase<List<Comment>> {
+public class GetCommentUsecase extends Usecase<Comments> {
 
     private final RemoteRepository mRepository;
 
-    private final SchedulerTransformer<List<Comment>> mSchedulerTransformer;
+    private final SchedulerTransformer<Comments> mSchedulerTransformer;
 
     @Named("status_id")
     private final long id;
@@ -37,7 +35,7 @@ public class GetCommentUsecase extends Usecase<List<Comment>> {
         this.id = id;
     }
 
-    public Observable<List<Comment>> fetch(final boolean clear) {
+    public Observable<Comments> fetch(final boolean clear) {
         return buildObservable()
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -47,10 +45,10 @@ public class GetCommentUsecase extends Usecase<List<Comment>> {
                         }
                     }
                 })
-                .doOnNext(new Action1<List<Comment>>() {
+                .doOnNext(new Action1<Comments>() {
                     @Override
-                    public void call(List<Comment> comments) {
-                        if (!comments.isEmpty()) {
+                    public void call(Comments comments) {
+                        if (!comments.getComments().isEmpty()) {
                             ++page;
                         }
                     }
@@ -62,7 +60,7 @@ public class GetCommentUsecase extends Usecase<List<Comment>> {
     }
 
     @Override
-    protected Observable<List<Comment>> buildObservable() {
+    protected Observable<Comments> buildObservable() {
         if (id == 0) {
             return mRepository.comment_timeline(page)
                     .compose(mSchedulerTransformer);
